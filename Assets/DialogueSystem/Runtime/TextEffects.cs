@@ -4,28 +4,47 @@ using UnityEngine;
 using TMPro;
 using System;
 using static DialogueUtilities;
+using static DialogueHandler;
 
-public class TextEffects: MonoBehaviour
+public class TextEffects : MonoBehaviour
 {
-    private TMP_Text _textComponent;
-    public List<int> waveIndices = new List<int>();
-
     DialogueTheme theme;
     DialogueSettings settings;
     DialogueCallbackActions callbackActions;
 
-    private Dictionary<int, Color> colorIndices = new Dictionary<int, Color>();
-
-
-    private float deltatime = 0f;
-    public bool isAnimating { get; private set; }
+    /*Public member variables */
+    public bool IsAnimating { get; private set; }
     public bool speedUp { get; private set; }
+    public bool Paused { get; private set; }
 
-    private Action currentCallback;
+    /*Control struct */
+    class CharacterInfo
+    {
+        public bool processed;
+        
+        public float elapsedTime;
+        public float totalDuration;
+
+        public CharacterInfo(float duration)
+        {
+            totalDuration = duration;
+            elapsedTime = 0;
+            processed = false; 
+
+        }
+    }
+
+    /* Private member variables */
+    private TMP_Text _textComponent;
+    private TMP_TextInfo _textInfo;
+    private float deltatime = 0f;
+    private Dictionary<int, Color> colorIndices = new Dictionary<int, Color>();
+    private List<int> waveIndices = new List<int>();
+    private Dictionary<int, CharacterInfo> characterMap = new Dictionary<int, CharacterInfo>();
 
     public enum TextDisplayMode
     {
-        NONE = 0,
+        INSTANT = 0,
         TYPEWRITER = 1
     }
 
@@ -44,9 +63,14 @@ public class TextEffects: MonoBehaviour
         this.callbackActions = callbackActions;
     }
 
+    public void Pause(bool toggle)
+    {
+        Paused = toggle;
+    }
+
     public void SetIndices(int start, int end, Effect effect)
     {
-        switch(effect)
+        switch (effect)
         {
             case Effect.WAVE:
                 for (int i = start; i < end; ++i)
@@ -66,12 +90,12 @@ public class TextEffects: MonoBehaviour
 
     public void SetColorIndices(int start, int end, string color)
     {
-        
+
         if (theme.colors.ContainsKey(color.ToLower()))
         {
             for (int i = start; i < end; ++i)
             {
-                colorIndices.Add( i, theme.colors[color] );
+                colorIndices.Add(i, theme.colors[color]);
             }
         }
     }
@@ -81,6 +105,7 @@ public class TextEffects: MonoBehaviour
     {
         colorIndices.Clear();
         waveIndices.Clear();
+        characterMap.Clear();
     }
 
     public void Init(DialogueTheme theme, DialogueSettings settings, DialogueCallbackActions callbackActions = null)
@@ -93,17 +118,17 @@ public class TextEffects: MonoBehaviour
 
     public void DisplayWholeText()
     {
-        if(isAnimating)
+        if (IsAnimating)
         {
             _textComponent.maxVisibleCharacters = _textComponent.textInfo.characterCount;
             //currentCallback();
-            isAnimating = false;
+            IsAnimating = false;
         }
     }
 
     public void SpeedUp(bool toggle)
     {
-        if(isAnimating)
+        if (IsAnimating)
         {
             speedUp = toggle;
         }
@@ -111,86 +136,155 @@ public class TextEffects: MonoBehaviour
 
     public void Test()
     {
-        Debug.Log(callbackActions.OnBranchEnd.GetInvocationList().Length);
+        Debug.Log(callbackActions.OnBranchNodeEnd.GetInvocationList().Length);
     }
 
-    public void Typewriter(string text, Action callback)
+    public void Typewriter(string text, Action<DialogueEventType> callback, float? typewriterSpeedOverride = null)
     {
         _textComponent.maxVisibleCharacters = 0;
         _textComponent.text = text;
-        currentCallback = callback;
-        StartCoroutine(TypewriterEffect(callback));
+        //currentCallback = callback;
+        StartCoroutine(TypewriterEffect(callback, typewriterSpeedOverride));
     }
 
-    public IEnumerator TypewriterEffect(Action callback)
+    public IEnumerator TypewriterEffect(Action<DialogueEventType> callback, float? speedOverride)
     {
         _textComponent.ForceMeshUpdate();
-        isAnimating = true;
-        for (int i = 0; i<_textComponent.textInfo.characterCount; ++i)
+        IsAnimating = true;
+        float typeWriterWaitTime;
+        for (int i = 0; i < _textComponent.textInfo.characterCount; ++i)
         {
-            if (!isAnimating) break;
+            if (!IsAnimating) break;
+            while (Paused) yield return new WaitForEndOfFrame();
             _textComponent.maxVisibleCharacters += 1;
-            float typeWriterWaitTime = speedUp ? DecreasingFunction(settings.typewriterSpeed * settings.typewriterSpeedMultiplier) : DecreasingFunction(settings.typewriterSpeed);
+            if(speedOverride != null)
+            {
+                typeWriterWaitTime = speedOverride.Value;
+
+            } else
+            {
+                typeWriterWaitTime = speedUp ? DecreasingFunction(settings.typewriterSpeed * settings.typewriterSpeedMultiplier) : DecreasingFunction(settings.typewriterSpeed);
+            }
             yield return new WaitForSeconds(typeWriterWaitTime);
         }
-        callback();
-        isAnimating = false;
+
+        callback(DialogueEventType.OnTextEnd);
+        IsAnimating = false;
         yield return null;
+    }
+
+
+    private void ForEachCharacter(int charIndex, TMP_TextInfo textInfo)
+    {
+        TMP_CharacterInfo charInfo = textInfo.characterInfo[charIndex];
+        if (!charInfo.isVisible)
+        {
+            return;
+        }
+
+        Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
+        Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
+
+        OnCharacterAppear(charIndex, charInfo, verts, vertexColors);
+
+
+        if (waveIndices.Contains(charIndex))
+        {
+
+            for (int j = 0; j < 4; ++j)
+            {
+                Vector3 orig = verts[charInfo.vertexIndex + j];
+                verts[charInfo.vertexIndex + j] = orig + new Vector3(0, theme.WaveAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f, 0);
+            }
+        }
+
+        if (colorIndices.ContainsKey(charIndex))
+        {
+
+            for (int j = 0; j < 4; ++j)
+            {
+                vertexColors[charInfo.vertexIndex + j] = colorIndices[charIndex];
+            }
+        }
+    }
+
+    private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)
+    {
+        int numKeys = theme.OnLetterAppearAnimationCurve.length;
+        float positionDuration = theme.OnLetterAppearAnimationCurve.keys[numKeys - 1].time;
+        float colorDuration = theme.OnLetterAppearOpacity.keys[numKeys - 1].time;
+
+        if (!characterMap.ContainsKey(charIndex))
+        {
+            CharacterInfo characterInfo = new CharacterInfo(Mathf.Max(positionDuration, colorDuration));
+            characterMap.Add(charIndex, characterInfo);
+            callbackActions.OnCharacterAppear.Invoke('c');
+        }
+
+        CharacterInfo currentCharacter; 
+        if(characterMap.TryGetValue(charIndex, out currentCharacter))
+        {
+            if (currentCharacter.processed) return;
+
+            currentCharacter.elapsedTime += Time.deltaTime;
+
+            if (currentCharacter.elapsedTime < currentCharacter.totalDuration)
+            {
+                for (int j = 0; j < 4; ++j)
+                {
+                    Vector3 orig = verts[charInfo.vertexIndex + j];
+                    float curveValue = theme.OnLetterAppearAnimationCurve.Evaluate(currentCharacter.elapsedTime) ;
+                    verts[charInfo.vertexIndex + j] = orig + new Vector3(0, curveValue * 10, 0);
+
+                    Color32 charColor = vertexColors[charInfo.vertexIndex + j];
+                    float opacity = DialogueUtilities.FloatToByte(theme.OnLetterAppearOpacity.Evaluate(currentCharacter.elapsedTime));
+                    charColor.a = (byte)opacity;
+                    vertexColors[charInfo.vertexIndex + j] = charColor;
+                }
+            } 
+            else
+            {
+                currentCharacter.processed = true;
+            }
+        } 
+        else
+        {
+            Debug.LogWarning("No character found in char map");
+        }
+
+        
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        var textInfo = _textComponent.textInfo;
-        if (textInfo.characterCount > 0)
+
+        if (!Paused)
         {
-            _textComponent.ForceMeshUpdate();
-            
-
-            deltatime += Time.deltaTime;
-
-            for (int i = 0; i < textInfo.characterCount; ++i)
+            _textInfo = _textComponent.textInfo;
+            if (_textInfo.characterCount > 0)
             {
-                var charInfo = textInfo.characterInfo[i];
-                if (!charInfo.isVisible)
+                _textComponent.ForceMeshUpdate();
+
+                deltatime += Time.deltaTime;
+
+                for (int i = 0; i < _textInfo.characterCount; ++i)
                 {
-                    continue;
+                    ForEachCharacter(i, _textInfo);
+
                 }
 
-                Vector3[] verts = textInfo.meshInfo[charInfo.materialReferenceIndex].vertices;
-                Color32[] vertexColors = textInfo.meshInfo[charInfo.materialReferenceIndex].colors32;
-
-                if (waveIndices.Contains(i))
+                for (int i = 0; i < _textInfo.meshInfo.Length; ++i)
                 {
+                    var meshInfo = _textInfo.meshInfo[i];
+                    meshInfo.mesh.vertices = meshInfo.vertices;
+                    meshInfo.mesh.colors32 = meshInfo.colors32;
 
-                    for (int j = 0; j < 4; ++j)
-                    {
-                        Vector3 orig = verts[charInfo.vertexIndex + j];
-                        verts[charInfo.vertexIndex + j] = orig + new Vector3(0, theme.WaveCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f, 0);
-                    }
+                    _textComponent.UpdateGeometry(meshInfo.mesh, i);
                 }
 
-                if (colorIndices.ContainsKey(i))
-                {
-
-                    for (int j = 0; j < 4; ++j)
-                    {
-                        vertexColors[charInfo.vertexIndex + j] = colorIndices[i];
-                    }
-                }
-
+                //_textComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
             }
-
-            for (int i = 0; i < textInfo.meshInfo.Length; ++i)
-            {
-                var meshInfo = textInfo.meshInfo[i];
-                meshInfo.mesh.vertices = meshInfo.vertices;
-                meshInfo.mesh.colors32 = meshInfo.colors32;
-
-                _textComponent.UpdateGeometry(meshInfo.mesh, i);
-            }
-
-            //_textComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
         }
     }
 }

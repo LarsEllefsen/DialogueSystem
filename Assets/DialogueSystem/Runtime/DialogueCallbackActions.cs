@@ -8,12 +8,29 @@ using UnityEngine.Events;
 public class DialogueCallbackActions
 {
     /* Actions */
-    public Action OnLineEnd;
-    public Action<Branch> OnBranchEnd;
-    public Action OnDialogueEnd;
+    public Action<char> OnCharacterAppear;
+
+    public Action<TextNode> OnTextNodeEnter;
+    public Action<TextNode> OnTextNodeStart;
+    public Action<TextNode> OnTextNodeEnd;
+    public Action<TextNode> OnTextNodeLeave;
+
+    public Action<EventNode> OnEventNodeEnd;
+
+    public Action<BranchNode> OnBranchNodeEnd;
+
+    public Action<DialogueGraph> OnDialogueGraphEnd;
+
+    public Action<BaseNode> OnNodeEnter;
+    public Action<BaseNode> OnNodeLeave;
+    
 
     /*Events*/
-    public UnityEvent OnLineEndEvents;
-    public UnityEvent OnBranchEndEvents;
-    public UnityEvent OnDialogueEndEvents;
+    public UnityEvent<TextNode> OnTextNodeEndEvents;
+    public UnityEvent<BranchNode> OnBranchNodeEndEvents;
+    public UnityEvent<DialogueGraph> OnDialogueGraphEndEvents;
+    public UnityEvent<EventNode> OnEventNodeEndEvents;
+
+    /* Event Handler*/
+    public Action<DialogueEvent> EventHandler;
 }

@@ -5,116 +5,90 @@ using System.Linq;
 using System;
 using System.Globalization;
 
-[RequireComponent(typeof(AudioSource))]
 public class DialogueAudio : MonoBehaviour
 {
-    public AudioClip testClip;
-    public AudioClip clip;
 
-    //public ExifToolWrapper wrapper = new ExifToolWrapper();
+    public AudioSource audioSource;
+    public DialogueSystem dialogueSystem;
 
-    public List<VoiceCuts> voiceCuts = new List<VoiceCuts>();
+    public AudioClip OnLetterAppearSound;
 
-    public AudioSource src;
+    public State CurrentState { get; private set; }
 
-    private int current;
-    private float delay;
-
-    void Awake()
+    public enum State
     {
-        src = GetComponent<AudioSource>();
+        Idle,
+        PlayingAudio
     }
 
-    public void SetClip(AudioClip clip)
+    private void Start()
     {
-        this.clip = clip;
-        src.clip = clip;
-        //PlaySlice(1f, 1.9f, .9f);
-    }
-
-    public void SetDelay(float delay)
-    {
-        this.delay = delay;
-    }
-
-    public void TestPlay()
-    {
-        current = 0;
-        //PopulateMetadata();
-        Debug.Log(voiceCuts[0].startTime);
-        PlaySlice(voiceCuts[current].startTime, voiceCuts[current].endTime, voiceCuts[current].pitch, voiceCuts[current].reverse);
-
-    }
-
-    private AudioClip GetAudioSlice(AudioClip originalClip, float start, float end)
-    {
-        int frequency = originalClip.frequency;
-        Debug.Log(frequency);
-        float timeLength = end - start;
-        int samplesLength = (int)(frequency * timeLength) * 2;
-        AudioClip slice = AudioClip.Create(originalClip.name + "-sub", samplesLength, originalClip.channels, frequency, false);
-
-        /* Create a temporary buffer for the samples */
-        float[] data = new float[samplesLength];
-        /* Get the data from the original clip */
-        originalClip.GetData(data, (int)(frequency * start));
-        /* Transfer the data to the new clip */
-        slice.SetData(data, 0);
-
-        return slice;
-        
-    }
-
-    private void PlaySlice(float fromSeconds, float toSeconds, float pitch, bool reverse)
-    {
-        src.time = fromSeconds;
-        src.pitch = reverse ? pitch : -pitch;
-        src.Play();
-        double endTime = AudioSettings.dspTime + (toSeconds - fromSeconds);
-        src.SetScheduledEndTime(endTime);
-        StartCoroutine(NotifyOnAudioEnd(endTime, OnAudioSliceDone));
-    }
-
-    public void OnAudioSliceDone()
-    {
-        if (current + 1 < voiceCuts.Count)
+        if(audioSource == null)
         {
-            current += 1;
-            PlaySlice(voiceCuts[current].startTime, voiceCuts[current].endTime, voiceCuts[current].pitch, voiceCuts[current].reverse);
+            audioSource = GetComponent<AudioSource>();
+            if(audioSource == null)
+            {
+                Debug.LogError("Audio source missing on Dialogue Audio component!");
+            }
         }
-        else
+
+        if (dialogueSystem == null)
         {
-            Debug.Log("Im all done");
-            current = 0;
-            PlaySlice(voiceCuts[current].startTime, voiceCuts[current].endTime, voiceCuts[current].pitch, voiceCuts[current].reverse);
+            dialogueSystem = DialogueSystem.instance;
+            if (dialogueSystem == null)
+            {
+                Debug.LogError("Dialogue system missing on Dialogue Audio component!");
+            } else
+            {
+                Debug.Log("all gucci");
+            }
+        }
+
+        dialogueSystem.dialogueCallbackActions.OnCharacterAppear += OnCharacterAppear;
+        dialogueSystem.dialogueCallbackActions.OnTextNodeStart += OnTextStart;
+
+    }
+
+    private void OnCharacterAppear(char character)
+    {
+        if(OnLetterAppearSound != null) audioSource.PlayOneShot(OnLetterAppearSound);
+    }
+
+    private void OnTextStart(TextNode node)
+    {
+        if(CurrentState == State.PlayingAudio)
+        {
+            audioSource.Stop();
+        }
+
+        if(node.audioClip != null)
+        {
+            CurrentState = State.PlayingAudio;
+            audioSource.PlayOneShot(node.audioClip);
+
         }
     }
 
-    IEnumerator NotifyOnAudioEnd(double endTime, Action callback)
+    private void OnTextEnd(TextNode node)
     {
-        //yield return new WaitForSeconds(endTime);
-        while (AudioSettings.dspTime < endTime)
+        if(CurrentState == State.PlayingAudio)
         {
-            yield return new WaitForEndOfFrame();
+            audioSource.Stop();
         }
-        
-        callback();
     }
 
-   /* public void PopulateMetadata()
+    private void Update()
     {
-        wrapper.GetCuePoints("E:/Software/test_speech.wav");
-        cuts = new VoiceCuts[wrapper.Count];
-        Debug.Log("metadata done");
-        foreach (ExifTagItem i in wrapper)
+        if(audioSource != null)
         {
-            VoiceCuts cut = new VoiceCuts();
-            cut.startTime = float.Parse(i.start, CultureInfo.InvariantCulture);
-            cut.endTime = float.Parse(i.end, CultureInfo.InvariantCulture);
-            cut.pitch = 1f;
-            cut.reverse = false;
-            voiceCuts.Add(cut);
-            //Debug.Log("Group: " + i.group + "; Name: " + i.name + "; Start: " + i.start + "; End: " + i.end);
+            if (CurrentState == State.PlayingAudio)
+            {
+                if (!audioSource.isPlaying)
+                {
+                    CurrentState = State.Idle;
+                } 
+            }
         }
-    }*/
+    }
+
 }

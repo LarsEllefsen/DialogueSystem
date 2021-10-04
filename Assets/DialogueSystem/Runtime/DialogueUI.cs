@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using static DialogueHandler;
 
 public class DialogueUI 
 {
@@ -15,7 +16,7 @@ public class DialogueUI
     public DialogueSettings settings { get; private set; }
     public DialogueCallbackActions callbackActions { get; private set; }
     
-    public bool isAnimating { get { return textEffects.isAnimating; } }
+    public bool isAnimating { get { return textEffects.IsAnimating; } }
 
 
     public DialogueUI(GameObject dialogueText, GameObject dialoguePane = null, DialogueTheme defaultTheme = null, DialogueSettings settings = null, DialogueCallbackActions callbackActions = null)
@@ -23,7 +24,6 @@ public class DialogueUI
         if (dialoguePane != null) _paneGameObject = dialoguePane;
         if (dialogueText != null)
         {
-            Debug.Log(dialogueText);
             _textGameObject = dialogueText;
             _text = _textGameObject.GetComponent<TMP_Text>();
             if (_text == null)
@@ -66,17 +66,18 @@ public class DialogueUI
         textEffects.ClearAllIndices();
     }
 
-    public void SetDialogueText(string text, TextEffects.TextDisplayMode mode, Action callback)
+    public void SetDialogueText(string text, TextEffects.TextDisplayMode mode, Action<DialogueEventType> callback, float? typewriterSpeedOverride = null)
     {
         ShowDialoguePane(true);
+        callback(DialogueEventType.OnTextStart);
         switch (mode)
         {
             case TextEffects.TextDisplayMode.TYPEWRITER:
-                textEffects.Typewriter(text, callback);
+                textEffects.Typewriter(text, callback, typewriterSpeedOverride);
                 break;
-            case TextEffects.TextDisplayMode.NONE:
+            case TextEffects.TextDisplayMode.INSTANT:
                 _text.text = text;
-                callback();
+                callback(DialogueEventType.OnTextEnd);
                 break;
             default:
                 _text.text = text;

@@ -22,7 +22,7 @@ public class Branch
 public class Condition
 {
     public string Flag;
-    public bool MustBe;
+    public DialogueConditional.BoolCondition mustBe = DialogueConditional.BoolCondition.TRUE;
 }
 
 [Serializable]

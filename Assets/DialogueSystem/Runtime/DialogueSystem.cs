@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XNode;
 
 public class DialogueSystem : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class DialogueSystem : MonoBehaviour
     public string path = "";
     public string dialogueFileName;
 
+    [Header("Graph")]
+    public DialogueGraph dialogueGraph;
+
     [Header("UI")]
     public GameObject dialoguePane;
     public GameObject dialogueTextGameObject;
@@ -28,10 +32,11 @@ public class DialogueSystem : MonoBehaviour
     [Header("Settings")]
     [SerializeField]
     public DialogueSettings settings;
+    public DialogueDictionary dictionary;
     #endregion
 
     #region Custom functions
-    public Func<Condition, bool> CustomTestCondition
+    public Func<DialogueConditional, bool> CustomTestCondition
     {
 
         set
@@ -39,6 +44,8 @@ public class DialogueSystem : MonoBehaviour
             _handler.CustomTestCondition = value;
         }
     }
+
+    public Func<DialogueChoices, bool> OnChoiceDraw { get { return _handler.OnChoiceDraw; } set { _handler.OnChoiceDraw += value; } }
     #endregion
 
     #region Callback functions
@@ -58,25 +65,60 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    /*State Enum*/
-    enum State { 
-        Idle,
-        AnimatingLine,
-    }
-
-    #region Readonly members
-    public bool running { get; private set; }
-    public bool isAnimating { get { return ui.isAnimating; } }
-    public bool speedUp { get { return ui.textEffects.speedUp; } }
-    public int currentLine 
+    public List<DialogueGameState> gameStateVariables
     {
         get
         {
-            return _handler.currentLine;
+            return _handler.gameStateVariables;
+        }
+
+        private set
+        {
+            _handler.gameStateVariables = value;
+        }
+    }
+
+    /*State Enum*/
+    public enum State { 
+        NotRunning,
+        Idle,
+        Running,
+        Animating,
+        AwaitingChoice,
+        Waiting,
+        Paused,
+    }
+
+    #region Readonly members
+    public bool IsRunning { get {return _handler.IsRunning; } }
+    public bool isAnimating { get { return ui.isAnimating; } }
+    public bool speedUp { get { return ui.textEffects.speedUp; } }
+    public BaseNode CurrentNode 
+    {
+        get
+        {
+            return _handler.CurrentNode;
         }
         
     }
+    public BranchNode CurrentBranch
+    {
+        get
+        {
+            return _handler.CurrentBranch;
+        }
+
+    }
+    public DialogueGraph CurrentGraph
+    {
+        get
+        {
+            return _handler.CurrentGraph;
+        }
+
+    }
     public DialogueUI ui { get; private set; }
+    public State CurrentState { get { return _handler.CurrentState; } }
     #endregion
 
     private void Awake()
@@ -99,7 +141,7 @@ public class DialogueSystem : MonoBehaviour
 
         if (_handler == null)
         {
-            _handler = new DialogueHandler(ui, settings, dialogueCallbackActions);
+            _handler = new DialogueHandler(ui, settings, dialogueCallbackActions, dictionary, this);
         }
 
     }
@@ -115,20 +157,25 @@ public class DialogueSystem : MonoBehaviour
         ui.SetCallbackActions(callbackActions);
 
     }
+    public void RegisterEventHandler(Action<DialogueEvent> eventHandler)
+    {
+        Debug.Log("Registered event handler!");
+        dialogueCallbackActions.EventHandler += eventHandler;
+    }
+
+    public void DeregisterEventHandler(Action<DialogueEvent> eventHandler)
+    {
+        dialogueCallbackActions.EventHandler -= eventHandler;
+    }
 
     public void SetFlags(List<GameEventFlag> flags)
     {
         _handler.gameEventFlags = flags;
     }
 
-    public void SetResourceFolderName(string resourceFolderName)
+    public void SetDialogGameState(List<DialogueGameState> gameState)
     {
-        this.resourceFolderName = resourceFolderName;
-    }
-    
-    public void SetPath(string path)
-    {
-        this.path = path;
+        this.gameStateVariables = gameState;
     }
     
     public void SetDialogueFileName(string dialogueFileName)
@@ -136,19 +183,20 @@ public class DialogueSystem : MonoBehaviour
         this.dialogueFileName = dialogueFileName;
     }
 
-    public void StartDialogue(TextEffects.TextDisplayMode? textAnimation = null)
+    public void StartDialogue()
     {
-        if (running) return;
-
-        if (path.Substring(path.Length - 1) != "/") path += "/";
-
-        string pathToFile = $"{resourceFolderName}/{path}{dialogueFileName}";
-        if(_handler.LoadDialogue(pathToFile))
+        if (IsRunning)
         {
-            running = true;
-            TextEffects.TextDisplayMode mode = textAnimation == null ? settings.defaultTextDisplayMode : (TextEffects.TextDisplayMode)textAnimation;
-            _handler.DisplayLine(0, mode);
-        } 
+            Debug.LogWarning("The dialogue system is already running.");
+            return;
+        }
+
+        if(dialogueGraph == null)
+        {
+            Debug.LogError("No dialogue graph is set.");
+        }
+        _handler.ExecuteGraph(dialogueGraph);
+
     }
 
     #region Typewriter Interactions
@@ -163,42 +211,67 @@ public class DialogueSystem : MonoBehaviour
     }
     #endregion
 
-    public bool NextLine(TextEffects.TextDisplayMode? textAnimation = null)
+    public void AdvanceDialogue()
     {
-        TextEffects.TextDisplayMode mode = textAnimation == null ? settings.defaultTextDisplayMode : (TextEffects.TextDisplayMode)textAnimation;
 
-        if (_handler.currentLine + 1 < _handler.currentBranch.Lines.Length )
+        if (CurrentState == State.AwaitingChoice)
         {
-            _handler.DisplayLine(currentLine + 1, mode);
-            return true;
-        } 
-        else
-        {
-            return false;
+            Debug.LogWarning("Dialogue is currently awaiting a dialogue choice. Use SelectDialogueChoice to advance the dialogue.");
+            return;
         }
+
+        if(CurrentState == State.Waiting)
+        {
+            Debug.LogWarning("Dialogue system is currently waiting.");
+            return;
+        }
+
+        if (CurrentState != State.Running && CurrentState != State.Idle && CurrentState != State.Paused)
+        {
+            Debug.LogWarning("Dialogue system is currenly not running.");
+            return;
+        }
+
+
+        _handler.TraverseGraph();
+       
+
     }
 
-    public void PreviousLine()
+    public void SelectDialogueChoice(int choiceNum)
     {
-
+        //TODO: Figure out how we should handle this.
+        Debug.Log(choiceNum);
+        if(CurrentState != State.AwaitingChoice)
+        {
+            Debug.LogWarning("The dialogue system is not awaiting a player choice. Current node is " + _handler.CurrentNode.NodeType);
+            return;
+        }
+        _handler.HandleChoiceNode(_handler.CurrentNode as ChoiceNode, choiceNum);
     }
 
-    public void DisplayLine(int line)
+    public void SelectDialogueChoice(string choiceName)
     {
+        if (CurrentState != State.AwaitingChoice)
+        {
+            Debug.LogWarning("The dialogue system is not awaiting a player choice. Current node is " + _handler.CurrentNode.NodeType);
+            return;
+        }
 
+        ChoiceNode choiceNode = _handler.CurrentNode as ChoiceNode;
+        DialogueChoice selectedChoice = choiceNode.GetChoices().Choices.Find(x => x.choiceName == choiceName);
+        if(selectedChoice == null)
+        {
+            Debug.LogError($"No choice with name {choiceName} found.");
+            return;
+        }
+
+        _handler.HandleChoiceNode(_handler.CurrentNode as ChoiceNode, selectedChoice.choiceNumber);
     }
 
-    public void StartDialogue(string dialogueFileName, TextEffects.TextDisplayMode? textAnimation = null)
+    public void Pause(bool toggle)
     {
-        SetDialogueFileName(dialogueFileName);
-        StartDialogue(textAnimation);
-    }
-
-    public void StartDialogue(string dialogueFileName, string path, TextEffects.TextDisplayMode? textAnimation = null)
-    {
-        SetDialogueFileName(dialogueFileName);
-        SetPath(path);
-        StartDialogue(textAnimation);
+        _handler.Pause(toggle);
     }
 
     #region

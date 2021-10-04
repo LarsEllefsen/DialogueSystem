@@ -2,27 +2,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.RegularExpressions;
-using UnityEditor;
+using XNode;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Text.RegularExpressions;
 
 public class DialogueHandler
 {
     /* Readonly */
-    public Dialogue dialogue { get; private set; }
-    public TextAsset asset { get; private set; }
-    public int currentLine { get; private set; }
-    public bool isAnimating { get { return ui.isAnimating; } }
+    public Dialogue Dialogue { get; private set; }
+    public TextAsset Asset { get; private set; }
+    public bool IsAnimating { get { return ui.isAnimating; } }
+    public bool IsRunning { get; private set; }
+    public MonoBehaviour AttachedMonoBehaviour { get; private set; }
+    public DialogueSystem.State CurrentState { get; private set; }
 
-    public Branch currentBranch { get; private set; }
-    public List<Branch> currentValidBranches { get; private set; }
+    /*Private */
+    private DialogueSystem.State PreviousState;
+
+    /*
+     * Public  
+    */
+    public int currentDialogueChoiceNum;
+
+    /*
+     * Graph 
+     */
+    public DialogueGraph CurrentGraph { get; private set; }
+    public BranchNode CurrentBranch { get; private set; }
+    public BaseNode CurrentNode { get; private set; }
+    public BaseNode PreviousNode { get; private set; }
+    public List<BranchNode> CurrentValidBranches { get; private set; }
+    private BaseNode currentTextNode;
 
     /*
      * Settings
     */
     public DialogueSettings settings;
     public DialogueCallbackActions callbackActions;
+    public DialogueDictionary dictionary;
+
+    /*
+     * Enums
+     */
+
+    public enum GraphTraversalDirection
+    {
+        Forward,
+        Backward
+    }
+
+    public enum DialogueEventType
+    {
+        OnTextNodeEnter,
+        OnTextStart,
+        OnTextEnd,
+        OnTextNodeLeave,
+        OnBranchEnd,
+        OnDialogueEnd,
+        OnNodeEnter,
+        OnNodeLeave,
+    }
 
     //Voice stuff
     public DialogueAudio audio;
@@ -33,27 +73,309 @@ public class DialogueHandler
     StringBuilder str = new StringBuilder();
 
     public List<GameEventFlag> gameEventFlags { get; set; }
+    public List<DialogueGameState> gameStateVariables;
     private DialogueUI ui;
 
     /* Higher order functions? */
-    public Func<Condition, bool> CustomTestCondition { get; set; }
+    public Func<DialogueConditional, bool> CustomTestCondition { get; set; }
+    public Func<DialogueChoices, bool> OnChoiceDraw;
 
-    public DialogueHandler(DialogueUI ui, DialogueSettings settings = null, DialogueCallbackActions callbackActions = null)
+
+    public DialogueHandler(DialogueUI ui, DialogueSettings settings = null, DialogueCallbackActions callbackActions = null, DialogueDictionary dictionary = null, MonoBehaviour monoBehaviour = null)
     {
         this.ui = ui;
         this.settings = settings ?? new DialogueSettings();
         this.callbackActions = callbackActions ?? new DialogueCallbackActions();
+        this.dictionary = dictionary ?? new DialogueDictionary();
+        this.AttachedMonoBehaviour = monoBehaviour;
     }
 
+    public void ExecuteGraph(DialogueGraph graph)
+    {
+        CurrentGraph = graph;
+        GetPossibleBranches();
+        if(CurrentValidBranches.Count != 0)
+        {
+            IsRunning = true;
+            CurrentState = DialogueSystem.State.Running;
+            SetCurrentBranch();
+            TraverseGraph();
+        } else
+        {
+            Debug.LogWarning("No valid branch found.");
+        }
+    }
+
+    public void TraverseGraph(GraphTraversalDirection direction = GraphTraversalDirection.Forward) 
+    {
+        if (CurrentNode == null)
+        {
+            if (CurrentBranch == null)
+            {
+                Debug.LogError("Cannot travese graph - No branch set!");
+                return;
+            }
+            CurrentNode = CurrentBranch;
+        }
+        string nodeType = CurrentNode.NodeType;
+
+        if(PreviousNode != null && !PreviousNode.processed)
+        {
+            InvokeCallbacks(DialogueEventType.OnNodeLeave);
+        }
+
+        if (!CurrentNode.entered) InvokeCallbacks(DialogueEventType.OnNodeEnter);
+
+        if (nodeType == "BranchNode")
+        {
+            BaseNode nextNode = GetNextNode(CurrentNode);
+            if(nextNode != null)
+            {
+                CurrentNode = nextNode;
+                TraverseGraph();
+            } else
+            {
+                Debug.LogWarning($"Branch {CurrentNode.name} is not connected to anything.");
+            }
+        }
+
+        if(nodeType == "TextNode")
+        {
+            HandleTextNode();
+        }
+
+        if(nodeType == "ConditionalNode")
+        {
+            ConditionalNode node = CurrentNode as ConditionalNode;
+            bool result = EvaluateConditionalNode(node);
+
+            NodePort output = result ? CurrentNode.GetOutputPort("trueOutput") : CurrentNode.GetOutputPort("falseOutput");
+            NodePort connectingNode = output.Connection;
+            if (connectingNode != null)
+            {
+                PreviousNode = CurrentNode;
+                CurrentNode = connectingNode.node as BaseNode;
+                TraverseGraph();
+            }
+            else
+            {
+                Debug.LogWarning($"Conditional node {CurrentNode.name} is not connected to anything.");
+            }
+        }
+
+        if(nodeType == "ChoiceNode")
+        {
+            //TODO: Find out how to draw this to the screen in a "generic" way.
+            //TODO: Rewrite the state of the dialogue, so we can have some kind of "awaiting input" state.
+            HandleChoiceNode(CurrentNode as ChoiceNode);
+
+        }
+
+        if(nodeType == "EventNode")
+        {
+            HandleEventNode(CurrentNode as EventNode);
+            //callbackActions.OnEventNodeEnd.Invoke(CurrentNode as EventNode);
+        }
+
+        if(nodeType == "WaitNode")
+        {
+            WaitNode node = CurrentNode as WaitNode;
+            if(AttachedMonoBehaviour != null)
+            {
+                CurrentState = DialogueSystem.State.Waiting;
+                if (node.hideWindow) ui.ShowDialoguePane(false);
+                AttachedMonoBehaviour.StartCoroutine(WaitNode(node.time, OnWaitNodeEndCallback));
+            } else
+            {
+                Debug.LogError("DialogueHandler has no attached MonoBehaviour. Wait node will be skipped.");
+            }
+        }
+    }
+
+    public void HandleTextNode()
+    {
+        if (currentTextNode == null)
+        {
+            currentTextNode = CurrentNode;
+            TextNode textNode = currentTextNode as TextNode;
+            string text = ProcessText(CurrentNode.GetString()[0]);
+            if (textNode.audioClip != null && textNode.syncTypewriter)
+            {
+                float speedOverride = textNode.audioClip.length / text.Length;
+                DisplayText(text, settings.textDisplayMode, speedOverride);
+            }
+            else
+            {
+                DisplayText(text, settings.textDisplayMode);
+            }
+        }
+        else
+        {
+            BaseNode nextNode = GetNextNode(currentTextNode);
+            currentTextNode = null;
+            if (nextNode != null)
+            {
+                CurrentNode = nextNode;
+                TraverseGraph();
+            }
+            else
+            {
+                EndDialogue();
+            }
+        }
+    }
+    public void HandleChoiceNode(ChoiceNode node, int choiceNum = -1)
+    {
+        if(node == null)
+        {
+            Debug.LogError("Choice node is not set.");
+            return;
+        }
+
+        ChoiceNode choiceNode = CurrentNode as ChoiceNode;
+
+        if (choiceNum == -1)
+        {
+            if (OnChoiceDraw != null)
+            {
+                CurrentState = DialogueSystem.State.AwaitingChoice;
+                OnChoiceDraw.Invoke(choiceNode.GetChoices());
+            }
+            else
+            {
+                throw new MissingMethodException("No OnChoiceDraw method specified for ChoiceNode.");
+            }
+            return;
+        }
+
+        if (choiceNum >= 0 && choiceNum <= node.choices.Count)
+        {
+            NodePort output = choiceNode.GetOutputPort($"choices {choiceNum}");
+            NodePort connectingNode = output.Connection;
+            if (connectingNode != null)
+            {
+                PreviousNode = CurrentNode;
+                CurrentNode = connectingNode.node as BaseNode;
+                TraverseGraph();
+            }
+            else
+            {
+                Debug.LogWarning($"Choice node {CurrentNode.name}: Output port {choiceNum} is not connected to anything.");
+            }
+        } 
+        else
+        {
+            throw new ArgumentOutOfRangeException($"choice numer {choiceNum} is not out of range. Found {node.choices.Count} available choices.");
+        }
+    }
+    public void HandleEventNode(EventNode node)
+    {
+        if(CurrentState == DialogueSystem.State.Paused)
+        {
+            BaseNode nextNode = GetNextNode(node);
+            if(nextNode != null)
+            {
+                CurrentNode = nextNode;
+                TraverseGraph();
+                return;
+            }
+        }
+
+
+        if(!node.GoToNextNodeAutomatically)
+        {
+            CurrentState = DialogueSystem.State.Paused;
+        }
+
+        if (callbackActions.EventHandler == null)
+        {
+            Debug.LogError("No dialogue event handler is registered.");
+            return;
+        }
+
+        foreach(DialogueEvent dialogueEvent in node.events)
+        {
+            callbackActions.EventHandler.Invoke(dialogueEvent);
+        }
+
+        if (node.GoToNextNodeAutomatically )
+        {
+            BaseNode nextNode = GetNextNode(node);
+            if (nextNode != null)
+            {
+                CurrentNode = nextNode;
+                TraverseGraph();
+                return;
+            }
+        }
+    }
+
+    private BaseNode GetNextNode(BaseNode currentNode)
+    {
+        NodePort output = currentNode.GetOutputPort("output");
+        NodePort connectingNode = output.Connection;
+        if (connectingNode != null)
+        {
+            PreviousNode = currentNode;
+            return connectingNode.node as BaseNode;
+            
+        }
+        return null;
+    }
+    
+    public void OnWaitNodeEndCallback()
+    {
+        ui.ShowDialoguePane(true);
+        BaseNode nextNode = GetNextNode(CurrentNode);
+        if (nextNode != null)
+        {
+            CurrentNode = nextNode;
+            TraverseGraph();
+        }
+    }
+    private IEnumerator WaitNode(float seconds, Action onWaitEndCallback)
+    {
+        yield return new WaitForSeconds(seconds);
+        onWaitEndCallback.Invoke();
+
+    }
+
+    public void EndDialogue()
+    {
+        IsRunning = false;
+        InvokeCallbacks(DialogueEventType.OnDialogueEnd);
+        ui.ShowDialoguePane(false);
+        ui.Reset();
+        CurrentNode = null;
+        CurrentBranch = null;
+        CurrentGraph = null;
+    }
+    private bool EvaluateConditionalNode(ConditionalNode node)
+    {
+        List<bool> evaluations = new List<bool>(); 
+        foreach(DialogueConditional condition in node.condition) 
+        {
+            if(CustomTestCondition != null)
+            {
+                evaluations.Add(CustomTestCondition(condition));
+            } 
+            else
+            {
+                evaluations.Add(TestCondition(condition));
+            }
+        }
+        
+        return evaluations.TrueForAll(x => x);
+    }
 
     public bool LoadDialogue(string pathToResourceFile)
     {
         if(pathToResourceFile != null && pathToResourceFile != "")
         {
-            asset = Resources.Load<TextAsset>(pathToResourceFile);
-            if(asset != null)
+            Asset = Resources.Load<TextAsset>(pathToResourceFile);
+            if(Asset != null)
             {
-                dialogue = JsonUtility.FromJson<Dialogue>(asset.ToString());
+                Dialogue = JsonUtility.FromJson<Dialogue>(Asset.ToString());
                 GetPossibleBranches();
                 SetCurrentBranch();
                 return true;
@@ -76,13 +398,14 @@ public class DialogueHandler
 
     private void GetPossibleBranches()
     {
-        List<Branch> validBranches = new List<Branch>();
-        foreach (Branch branch in dialogue.Branches)
+        List<BranchNode> validBranches = new List<BranchNode>();
+        foreach (BranchNode branch in CurrentGraph.GetAllBranchNodes())
         {
+            
             List<bool> evaluations = new List<bool>();
-            foreach(Condition condition in branch.Conditions)
+            foreach(DialogueConditional condition in branch.branchCondition)
             {
-                bool eval;
+                bool eval = false;
                 if(CustomTestCondition != null)
                 {
                     eval = CustomTestCondition(condition);
@@ -95,24 +418,24 @@ public class DialogueHandler
 
             if (evaluations.TrueForAll(x => x == true)) validBranches.Add(branch);
         }
-        currentValidBranches = validBranches;
+        CurrentValidBranches = validBranches;
     }
 
     private void SetCurrentBranch()
     {
-        if(currentValidBranches.Count > 0)
+        if(CurrentValidBranches.Count > 0)
         {
             switch(settings.multipleValidBranchesSelectionMode)
             {
                 case DialogueSettings.MultipleValidBranchesSelectionMode.FIRST:
-                    currentBranch = currentValidBranches[0];
+                    CurrentBranch = CurrentValidBranches[0];
                     break;
                 case DialogueSettings.MultipleValidBranchesSelectionMode.PRIORITY:
-                    currentBranch = currentValidBranches[0];
+                    CurrentBranch = CurrentValidBranches[0];
                     break;
                 case DialogueSettings.MultipleValidBranchesSelectionMode.RANDOM:
-                    int randInt = Random.Range(0, currentValidBranches.Count - 1);
-                    currentBranch = currentValidBranches[randInt];
+                    int randInt = Random.Range(0, CurrentValidBranches.Count - 1);
+                    CurrentBranch = CurrentValidBranches[randInt];
                     break;
                 default:
                     break;
@@ -120,62 +443,189 @@ public class DialogueHandler
         }
     }
 
-    private bool TestCondition(Condition condition)
+    private bool TestCondition(DialogueConditional condition)
     {
-        if(gameEventFlags != null)
+        DialogueGameState gameStateVariable = gameStateVariables.Find(x => x.name.ToLower() == condition.variable.ToLower());
+        if (gameStateVariable == null)
         {
-            GameEventFlag flag = gameEventFlags.Find(x => x.name.ToLower() == condition.Flag.ToLower());
-            if(flag != null)
-            {
-                return flag.active == condition.MustBe;
-            } else
-            {
-                return false;
-            }
-        } 
-        else
-        {
-            Debug.LogError("Game event flags are not set!");
+            Debug.LogWarning($"No game state variable with name {condition.variable} was found!");
             return false;
         }
+        switch (condition.type)
+        {
+            case DialogueConditional.VariableType.INT:
+                if (gameStateVariable.ValueType != typeof(int))
+                {
+                    Debug.LogError($"Condition {condition.variable} expected variable of type integer, got {gameStateVariable.ValueType}");
+                    return false;
+                }
+                switch (condition.numberCondition)
+                {
+                    case DialogueConditional.NumberCondition.GreaterThan:
+                        return gameStateVariable.IntValue > condition.intTarget;
+                    case DialogueConditional.NumberCondition.GreaterThanOrEqual:
+                        return gameStateVariable.IntValue >= condition.intTarget;
+                    case DialogueConditional.NumberCondition.LessThan:
+                        return gameStateVariable.IntValue < condition.intTarget;
+                    case DialogueConditional.NumberCondition.LessThanOrEqual:
+                        return gameStateVariable.IntValue <= condition.intTarget;
+                    case DialogueConditional.NumberCondition.EqualTo:
+                        return gameStateVariable.IntValue == condition.intTarget;
+                }
+                break;
+            case DialogueConditional.VariableType.BOOL:
+                if (gameStateVariable.ValueType != typeof(bool))
+                {
+                    Debug.LogError($"Condition {condition.variable} expected variable of type boolean, got {gameStateVariable.ValueType}");
+                    return false;
+                }
+                switch (condition.boolCondition)
+                {
+                    case DialogueConditional.BoolCondition.FALSE:
+                        return gameStateVariable.BoolValue == false;
+                    case DialogueConditional.BoolCondition.TRUE:
+                        return gameStateVariable.BoolValue == true;
+                }
+                break;
+            case DialogueConditional.VariableType.FLOAT:
+                if (gameStateVariable.ValueType != typeof(float))
+                {
+                    Debug.LogError($"Condition {condition.variable} expected variable of type float, got {gameStateVariable.ValueType}");
+                    return false;
+                }
+                switch (condition.numberCondition)
+                {
+                    case DialogueConditional.NumberCondition.GreaterThan:
+                        return gameStateVariable.FloatValue > condition.floatTarget;
+                    case DialogueConditional.NumberCondition.GreaterThanOrEqual:
+                        return gameStateVariable.FloatValue >= condition.floatTarget;
+                    case DialogueConditional.NumberCondition.LessThan:
+                        return gameStateVariable.FloatValue < condition.floatTarget;
+                    case DialogueConditional.NumberCondition.LessThanOrEqual:
+                        return gameStateVariable.FloatValue <= condition.floatTarget;
+                    case DialogueConditional.NumberCondition.EqualTo:
+                        return gameStateVariable.FloatValue == condition.floatTarget;
+                }
+                break;
+            case DialogueConditional.VariableType.STRING:
+                if (gameStateVariable.ValueType != typeof(string))
+                {
+                    Debug.LogError($"Condition {condition.variable} expected variable of type string, got {gameStateVariable.ValueType}");
+                    return false;
+                }
+                switch (condition.stringCondition)
+                {
+                    case DialogueConditional.StringCondition.EqualTo:
+                        return gameStateVariable.StringValue == condition.stringTarget;
+                    case DialogueConditional.StringCondition.EqualToIgnoreCasing:
+                        return gameStateVariable.StringValue.ToLower() == condition.stringTarget.ToLower();
+                    case DialogueConditional.StringCondition.NotEqualTo:
+                        return gameStateVariable.StringValue != condition.stringTarget;
+                    case DialogueConditional.StringCondition.NotEqualToIgnoreCasing:
+                        return gameStateVariable.StringValue.ToLower() != condition.stringTarget.ToLower();
+                }
+                return false;
+        }
+        return false;
     }
 
-    public void DisplayLine(int num, TextEffects.TextDisplayMode textAnimation)
+    public void DisplayText(string text, TextEffects.TextDisplayMode textAnimation, float? typewriterSpeedOverride = null)
     {
-        currentLine = num;
-        string processedLine = ProcessText(currentBranch.Lines[num].Text);
-        ui.SetDialogueText(processedLine, textAnimation, InvokeCallbacks);
+        if (textAnimation != TextEffects.TextDisplayMode.INSTANT) CurrentState = DialogueSystem.State.Animating;
+        ui.SetDialogueText(text, textAnimation, InvokeCallbacks, typewriterSpeedOverride);
     }
 
-    private void InvokeCallbacks()
+    private void InvokeCallbacks(DialogueEventType eventType)
     {
+
         if(callbackActions != null)
         {
-            if(currentLine == currentBranch.Lines.Length - 1)
+
+            if (eventType == DialogueEventType.OnTextStart)
             {
-                callbackActions.OnBranchEnd.Invoke(currentBranch);
-                callbackActions.OnBranchEndEvents.Invoke();
+                TextNode node = currentTextNode as TextNode;
+                callbackActions.OnTextNodeStart?.Invoke(node);
+                //callbackActions.OnTextNodeEndEvents?.Invoke(node);
             }
 
-            // On dialogue end??
+            if (eventType == DialogueEventType.OnTextEnd)
+            {
+                TextNode node = currentTextNode as TextNode;
+                callbackActions.OnTextNodeEnd?.Invoke(node);
+                callbackActions.OnTextNodeEndEvents?.Invoke(node);
+            }
+
+            if(eventType == DialogueEventType.OnBranchEnd)
+            {
+                callbackActions.OnBranchNodeEnd?.Invoke(CurrentBranch);
+                callbackActions.OnBranchNodeEndEvents?.Invoke(CurrentBranch);
+            }
+
+            if(eventType == DialogueEventType.OnDialogueEnd)
+            {
+                callbackActions.OnDialogueGraphEnd?.Invoke(CurrentGraph);
+                callbackActions.OnDialogueGraphEndEvents?.Invoke(CurrentGraph);
+            }
+
+            if (eventType == DialogueEventType.OnNodeEnter)
+            {
+                CurrentNode.entered = true;
+                callbackActions.OnNodeEnter?.Invoke(CurrentNode);
+            }
+
+            if (eventType == DialogueEventType.OnNodeLeave)
+            {
+                PreviousNode.processed = true;
+                callbackActions.OnNodeLeave?.Invoke(PreviousNode);
+            }
+
         }
+
+        if (eventType == DialogueEventType.OnTextEnd)
+        {
+            TextNode node = currentTextNode as TextNode;
+            if (!node.WaitForInput)
+            {
+                TraverseGraph();
+            }
+
+            else
+            {
+                CurrentState = DialogueSystem.State.Idle;
+            }
+        }
+    }
+
+    public void Pause(bool toggle)
+    {
+        //if(CurrentState != DialogueSystem.State.Paused && toggle == true)
+        //{
+        //    PreviousState = CurrentState;
+        //}
+        //CurrentState = toggle? DialogueSystem.State.Paused : PreviousState;
+        //ui.textEffects.Pause(toggle);
     }
 
     string ProcessText(string line)
     {
+        
         str.Clear();
         ui.Reset();
 
+        Regex reg = new Regex(@"<.*?/>");
+        MatchCollection regexMatches = reg.Matches(line);
+        string interpolatedText = ReplaceWords(regexMatches, line);
+
         List<TextCommand> AllCmdObjects = new List<TextCommand>();
-        List<int> CmdObjectIndex = line.AllIndexesOf("{");
+        List<int> CmdObjectIndex = interpolatedText.AllIndexesOf("{");
 
         int index = 0;
-        for (int i = 0; i < line.Length; ++i)
+        for (int i = 0; i < interpolatedText.Length; ++i)
         {
             if (CmdObjectIndex.Contains(i))
             {
-                int cmdEndIndex = line.IndexOf('}', i);
-                string substring = line.Substring(i, cmdEndIndex - i + 1);
+                int cmdEndIndex = interpolatedText.IndexOf('}', i);
+                string substring = interpolatedText.Substring(i, cmdEndIndex - i + 1);
                 TextCommand cmd = JsonUtility.FromJson<TextCommand>(substring);
                 switch (cmd.effect)
                 {
@@ -196,7 +646,7 @@ public class DialogueHandler
             }
             else
             {
-                str.Append(line[i]);
+                str.Append(interpolatedText[i]);
                 index++;
             }
         }
@@ -204,89 +654,33 @@ public class DialogueHandler
         return str.ToString();
     }
 
-    //public override void Interact()
-    //{
-    //    if (!isInteracting)
-    //    {
-    //        RotateTowardsPlayer();
-    //        ui.ToggleDialoguePanel(true);
-    //        isInteracting = true;
-    //        timeCount = 0;
-    //        isRotatingToPlayer = true;
-    //        sm.SetDialogueCamera(transform);
+    string ReplaceWords(MatchCollection matches, string originalString)
+    {
+        string interpolatedString = originalString;
+        foreach(Match match in matches)
+        {
+            GroupCollection group = match.Groups;
+            foreach(Group key in group)
+            {
+                if(key.Value.Length <= 3 || string.IsNullOrWhiteSpace(key.Value.Substring(1, key.Value.Length - 3)))
+                {
+                    Debug.LogWarning("Empty dictionary key found in text.");
+                    continue;
+                } 
+                else
+                {
+                    string keyValue = key.Value.Substring(1, key.Value.Length - 3);
+                    string dictionaryValue = dictionary.GetEntry(keyValue);
+                    if (dictionaryValue != null)
+                    {
+                        interpolatedString = interpolatedString.Replace(key.Value, dictionaryValue);
+                    }
+                }
+            }
+        }
 
-    //        foreach (Branch branch in dialogue.Branches)
-    //        {
-    //            GameEventFlag flag = evt.flags.Find(x => x.name == branch.Condition);
-    //            if (flag != null && flag.active)
-    //            {
-    //                numLines = branch.Lines.Length;
-    //                currentBranch = branch;
-    //                DisplayLine(0);
-    //                /*string line = branch.Lines[0];
-    //                string processedLine = ProcessText(line);
-    //                ui.SetDialogueText(processedLine, TextEffects.TextDisplayMode.TYPEWRITER);
-    //                StartCoroutine(DisplayText(processedLine));
-    //                ignoreFlags.Add(flag);*/
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (isAnimating)
-    //        {
-    //            Debug.Log("Im currently animating a line, lets display the whole shebang!");
-    //            ui.SkipText();
-    //            return;
-    //        }
-    //        else
-    //        {
-    //            if (currentLine + 1 < numLines)
-    //            {
-    //                currentLine++;
-    //                Debug.Log("Im currently animating a line, lets display the whole shebang!");
-    //                DisplayLine(currentLine++);
-    //            }
-    //            else
-    //            {
-    //                EndInteraction();
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public void EndInteraction()
-    //{
-    //    sm.EndInteraction();
-    //    isInteracting = false;
-    //    ui.ToggleDialoguePanel(false);
-    //}
-
-    //void textFinishedCallback()
-    //{
-    //    isAnimating = false;
-    //}
-
-    //private void RotateTowardsPlayer()
-    //{
-    //    Vector3 dir = (sm.mTransform.position - transform.position).normalized;
-    //    timeCount += 0.05f ;
-    //    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), timeCount);//Quaternion.LookRotation(dir);
-
-    //    if(timeCount >= 0.98)
-    //    {
-    //        isRotatingToPlayer = false;
-    //        timeCount = 0f;
-    //    }
-    //}
-
-    //private void Update()
-    //{
-    //    if(isRotatingToPlayer)
-    //    {
-    //        RotateTowardsPlayer();
-    //    }
-    //}
+        return interpolatedString;
+    }
 
 }
 

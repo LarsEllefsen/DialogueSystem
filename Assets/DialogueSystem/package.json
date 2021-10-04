@@ -6,6 +6,7 @@
     "version": "1.0.0",
     "unity": "2020.1.1",
     "dependencies": {
-        "com.unity.textmeshpro": "3.0.1"
+        "com.unity.textmeshpro": "3.0.1",
+        "com.github.siccity.xnode": "https://github.com/siccity/xNode.git"
     }
 }

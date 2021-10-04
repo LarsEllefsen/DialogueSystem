@@ -20,7 +20,7 @@ public class DialogueSettings
 
     public bool HideDialoguePaneOnStart = true;
 
-    public TextEffects.TextDisplayMode defaultTextDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
+    public TextEffects.TextDisplayMode textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
 
     [Header("Typewriter")]
     public float typewriterSpeed = 10f;
