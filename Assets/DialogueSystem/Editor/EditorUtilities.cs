@@ -61,8 +61,6 @@ public class EditorUtilities
             };
         list.onReorderCallback =
             (ReorderableList rl) => {
-                bool hasRect = false;
-                bool hasNewRect = false;
                 Rect rect = Rect.zero;
                 Rect newRect = Rect.zero;
 

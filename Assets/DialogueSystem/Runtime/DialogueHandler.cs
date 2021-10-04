@@ -68,12 +68,6 @@ public class DialogueHandler
         OnNodeLeave,
     }
 
-    //Voice stuff
-    public DialogueAudio audio;
-    public AudioClip voiceClip;
-    public VoiceCuts[] voiceCuts;
-    public float voiceCutDelay = .5f;
-
     StringBuilder str = new StringBuilder();
 
     public List<GameEventFlag> gameEventFlags { get; set; }
@@ -694,15 +688,6 @@ public class DialogueHandler
 }
 
 [Serializable]
-public class VoiceCuts
-{
-    public float startTime = 0f;
-    public float endTime = 1f;
-    public float pitch = 1f;
-    public bool reverse = false;
-}
-
-[Serializable]
 public class TextCommand
 {
     public string effect;
@@ -710,44 +695,4 @@ public class TextCommand
     public string text;
 }
 
-public class TestEvents
-{
-    public bool Testi = true;
-    public Dictionary<string, bool> testy;
-    public List<GameEventFlag> flags = new List<GameEventFlag>();
-
-    public TestEvents()
-    {
-        testy = new Dictionary<string, bool>();
-        testy.Add("testo", true);
-        flags.Add(new GameEventFlag("B", true));
-    }
-}
-
-public class GameEventFlag
-{
-    public string name;
-    public bool active;
-    public GameEventFlag(string name, bool active)
-    {
-        this.name = name;
-        this.active = active;
-    }
-}
-
-public class JsonHelper
-{
-    public static T[] getJsonArray<T>(string json)
-    {
-        string newJson = "{ \"array\": " + json + "}";
-        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
-        return wrapper.array;
-    }
-
-    [Serializable]
-    private class Wrapper<T>
-    {
-        public T[] array;
-    }
-}
 

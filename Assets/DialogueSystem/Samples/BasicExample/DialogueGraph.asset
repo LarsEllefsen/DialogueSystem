@@ -43,10 +43,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 5b3ad97457c82104b8ebb55279f2b4a8
+  id: 3853225442362534fab4391fdebf4f71
   nodeName: Text node
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: Speaker
@@ -103,10 +103,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 874149d1768b12d4b939ac5e0465872d
+  id: fa5b9519c29381843b08baaf7f5e18da
   nodeName: Text node
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: Speaker
@@ -159,10 +159,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: aaee1a07220cece47830be956763fd76
+  id: 1caccf75b55b50746b372b657448913a
   nodeName: Text node
   processed: 0
-  entered: 1
+  entered: 0
   input: 0
   metaData:
   - key: 
@@ -204,10 +204,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 3ed39e163738df94f9853a4ceeaec0e7
+  id: c9afc6a3de85a3a408572bbf1d2cc6d2
   nodeName: Branch
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   output: 0
   branchCondition: []
 --- !u!114 &11400000
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6ed4f2d69e843f498d080c4deec879d, type: 3}
-  m_Name: A
+  m_Name: DialogueGraph
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -1406497122811799601}
@@ -289,7 +289,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 26502445086d1d848b07b9bcdf2b82e2
+  id: c2675de06e8d167468bf1c37643faf37
   nodeName: Text node
   processed: 0
   entered: 0
@@ -347,10 +347,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 82e9de035be309844a485074bb637ba4
+  id: d094382b4367797489fdf1e1b1930674
   nodeName: Text node
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: 
@@ -407,10 +407,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c099bf8a77104e14f86c76cc671fd25a
+  id: 1901eb7dcebf95f47b771d0b601480da
   nodeName: Text node
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: 
@@ -468,7 +468,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: ac4dd693b62a6884289a02a9c81af5ad
+  id: 7112518a87c93f7448a921ca86d4dd79
   nodeName: Text node
   processed: 0
   entered: 0
@@ -539,10 +539,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: f8c7575bf2770e3448f9181630efe4df
+  id: 959e05d3d072b5b4abfc6a590966f379
   nodeName: Condition
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   trueOutput: 0
   falseOutput: 0
@@ -599,10 +599,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c9053b56577828d4fa29be45b9255b10
+  id: 1f4d932697087be468527833fed44ff2
   nodeName: Event node
-  processed: 1
-  entered: 1
+  processed: 0
+  entered: 0
   input: 0
   output: 0
   events:

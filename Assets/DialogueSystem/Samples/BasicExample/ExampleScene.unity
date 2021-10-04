@@ -257,402 +257,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17097734}
   m_CullTransparentMesh: 0
---- !u!1 &258181139
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 258181141}
-  - component: {fileID: 258181140}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &258181140
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258181139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Selection Change
-    - Moved Node
-    - Selection Change
-    - Moved Node
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Connect Port
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Add DialogueSystem
-    - Selection Change
-    - Remove MonoBehaviour
-    - Selection Change
-    - Reset DialogueSystem DialogueSystem
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Connect Port
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Moved Node
-    - Moved Node
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Selection Change
-    - Delete Node
-    - Selection Change
-    - Destroy Object
-    - Selection Change
-    - Moved Node
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Create Node
-    - Connect Port
-    - Selection Change
-    - Moved Node
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Selection Change
-    - Moved Node
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Create Cube
-    - Add MeshFilter
-    - Add MeshRenderer
-    - Add BoxCollider
-    - Create Cube
-    - Selection Change
-    - Move
-    - Inspector
-    - Inspector
-    - Inspector
-    - Move
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Move
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Move
-    - Move
-    - Move
-    - Move
-    - Move
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Move
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Inspector
-    - Create Node
-    - Connect Port
-    - Inspector
---- !u!4 &258181141
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258181139}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474576357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,7 +996,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1442492117
 GameObject:
@@ -1964,9 +1568,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     effects: []
-  graph: {fileID: 0}
+  graph: {fileID: 11400000, guid: 433020d8fe1d8dc44965943f8e5cd014, type: 2}
   UiHandler: {fileID: 1442492118}
-  testCube: {fileID: 0}
+  testCube: {fileID: 1282338450}
 --- !u!4 &2065139776
 Transform:
   m_ObjectHideFlags: 0
@@ -2089,3 +1693,65 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &2118763130
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2118763132}
+  - component: {fileID: 2118763131}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2118763131
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118763130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+--- !u!4 &2118763132
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118763130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
