@@ -132,6 +132,7 @@ public class TextEffects : MonoBehaviour
         colorIndices.Clear();
         waveIndices.Clear();
         characterMap.Clear();
+        effectIndices.Clear();
     }
 
     public void Init(DialogueTheme theme, DialogueSettings settings, DialogueCallbackActions callbackActions = null)

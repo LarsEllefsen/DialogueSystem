@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -9,18 +8,6 @@ using XNode;
 
 public class NodeParser
 {
-    JsonSerializer serializer;
-    public NodeParser()
-    {
-        serializer = new JsonSerializer
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            TypeNameHandling = TypeNameHandling.Auto,
-            Formatting = Formatting.Indented,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        };
-    }
-
     public void GenerateScript(DialogueGraph graph)
     {
         string f = Application.persistentDataPath + "/dialogueScript.json";
@@ -73,9 +60,6 @@ public class TestWindow: EditorWindow
 
         if(GUILayout.Button("Try Serialize"))
         {
-            //    DialogueGraph graph = (DialogueGraph)AssetDatabase.LoadAssetAtPath("Assets/DialogueSystem/Samples/A.asset", typeof(DialogueGraph));
-            //    Debug.Log(graph.nodeTypes.Count);
-            //    parser.SerializeNodes(graph);
             parser.GenerateScript((DialogueGraph)AssetDatabase.LoadAssetAtPath("Assets/DialogueSystem/Samples/A.asset", typeof(DialogueGraph)));
         }
 

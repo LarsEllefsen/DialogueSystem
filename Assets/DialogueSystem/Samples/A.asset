@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9140514925089200537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
+  m_Name: Text
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1558.5032, y: 160.4265}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: -9140514925089200537}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: output
+        node: {fileID: -8936389048274184872}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: -9140514925089200537}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 2192041326736385359}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 5b3ad97457c82104b8ebb55279f2b4a8
+  nodeName: Text node
+  processed: 1
+  entered: 1
+  input: 0
+  metaData:
+  - key: Speaker
+    value: Tutorial
+  - key: 
+    value: 
+  audioClip: {fileID: 0}
+  syncTypewriter: 0
+  text: 'You can add  {"effect": "wave", "color": "yellow","text":"text effects!"}
+    and extend it with your  {"effect": "customEffect1", "color": "red","text":"own
+    effects"} through the  {"effect": "customEffect2" ,"text":"inspector."}'
+  WaitForInput: 1
+  output: 0
 --- !u!114 &-8936389048274184872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +73,7 @@ MonoBehaviour:
   m_Name: Text node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1304, y: 72}
+  position: {x: 680, y: -200}
   ports:
     keys:
     - input
@@ -21,66 +81,6 @@ MonoBehaviour:
     values:
     - _fieldName: input
       _node: {fileID: -8936389048274184872}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: trueOutput
-        node: {fileID: -4714847101079049446}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: output
-      _node: {fileID: -8936389048274184872}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: input
-        node: {fileID: 5668383227566017505}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: f7be5a7eaa3a3fe42bb4fb5d8387fd45
-  nodeName: Text node
-  processed: 0
-  entered: 1
-  input: 0
-  metaData:
-  - key: Speaker
-    value: Lars
-  - key: 
-    value: 
-  audioClip: {fileID: 8300000, guid: d0893f6539060f9489349694cf4b7297, type: 3}
-  syncTypewriter: 1
-  text: 'Ida, you are {"effect": "custom", "color": "red","text":"SYNTX ERRl"} og
-    {"effect": "wave", "color": "yellow","text":"cute!"}'
-  WaitForInput: 1
-  output: 0
---- !u!114 &-4714847101079049446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab49fcc53323dd84492cf44e66388d4d, type: 3}
-  m_Name: Conditional
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 584, y: 120}
-  ports:
-    keys:
-    - input
-    - trueOutput
-    - falseOutput
-    values:
-    - _fieldName: input
-      _node: {fileID: -4714847101079049446}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
@@ -91,48 +91,35 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: trueOutput
-      _node: {fileID: -4714847101079049446}
+    - _fieldName: output
+      _node: {fileID: -8936389048274184872}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: input
-        node: {fileID: -8936389048274184872}
+        node: {fileID: -9140514925089200537}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: falseOutput
-      _node: {fileID: -4714847101079049446}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: input
-        node: {fileID: 133077507055485140}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 6f11092ea8048f745a8213b74451c99f
-  nodeName: Condition
+  id: 874149d1768b12d4b939ac5e0465872d
+  nodeName: Text node
   processed: 1
   entered: 1
   input: 0
-  trueOutput: 0
-  falseOutput: 0
-  condition:
-  - type: 1
-    variable: stringExample
-    numberCondition: 1
-    stringCondition: 0
-    boolCondition: 0
-    floatTarget: 0
-    stringTarget: Lord Maximus
-    boolTarget: 0
-    intTarget: 5
---- !u!114 &-4518331481189103696
+  metaData:
+  - key: Speaker
+    value: Tutorial
+  - key: 
+    value: 
+  audioClip: {fileID: 0}
+  syncTypewriter: 0
+  text: This is a simple example on how to use the dialogue system! Press Space to
+    advance the dialogue.
+  WaitForInput: 1
+  output: 0
+--- !u!114 &-5703039246456782174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,26 +132,26 @@ MonoBehaviour:
   m_Name: Text
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 4024, y: 344}
+  position: {x: 6200, y: 1608}
   ports:
     keys:
     - input
     - output
     values:
     - _fieldName: input
-      _node: {fileID: -4518331481189103696}
+      _node: {fileID: -5703039246456782174}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: output
-        node: {fileID: 3975330852158489528}
+        node: {fileID: 8875584961589071493}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: output
-      _node: {fileID: -4518331481189103696}
+      _node: {fileID: -5703039246456782174}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
@@ -172,79 +159,19 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 63efbd4e20193dd47b170c596654d634
+  id: aaee1a07220cece47830be956763fd76
   nodeName: Text node
   processed: 0
-  entered: 0
+  entered: 1
   input: 0
   metaData:
-  - key: 
-    value: 
   - key: 
     value: 
   - key: 
     value: 
   audioClip: {fileID: 0}
   syncTypewriter: 0
-  text: We're nearing the end :)
-  WaitForInput: 1
-  output: 0
---- !u!114 &-3207434698176955801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
-  m_Name: Text
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 2643.1885, y: 434.9735}
-  ports:
-    keys:
-    - input
-    - output
-    values:
-    - _fieldName: input
-      _node: {fileID: -3207434698176955801}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: choices 0
-        node: {fileID: 5668383227566017505}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: output
-      _node: {fileID: -3207434698176955801}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: input
-        node: {fileID: 3975330852158489528}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 6a3abc904f09b7e44910a0d7038727d9
-  nodeName: Text node
-  processed: 0
-  entered: 0
-  input: 0
-  metaData:
-  - key: 
-    value: 
-  - key: 
-    value: 
-  audioClip: {fileID: 8300000, guid: fed9bb680d67fe342ba9766881c40251, type: 3}
-  syncTypewriter: 1
-  text: You are good at knitting!
+  text: Pretty neat, huh?
   WaitForInput: 1
   output: 0
 --- !u!114 &-1406497122811799601
@@ -271,27 +198,18 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: input
-        node: {fileID: -4714847101079049446}
+        node: {fileID: -8936389048274184872}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: acc359228ccb2fe40b4ee2b6a19675e0
+  id: 3ed39e163738df94f9853a4ceeaec0e7
   nodeName: Branch
   processed: 1
   entered: 1
   output: 0
-  branchCondition:
-  - type: 0
-    variable: intExample
-    numberCondition: 4
-    stringCondition: 0
-    boolCondition: 0
-    floatTarget: 0
-    stringTarget: 
-    boolTarget: 0
-    intTarget: 10
+  branchCondition: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,25 +224,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -1406497122811799601}
-  - {fileID: -4714847101079049446}
-  - {fileID: 133077507055485140}
   - {fileID: -8936389048274184872}
-  - {fileID: 3975330852158489528}
-  - {fileID: -4518331481189103696}
-  - {fileID: 5668383227566017505}
-  - {fileID: -3207434698176955801}
+  - {fileID: -9140514925089200537}
+  - {fileID: 2192041326736385359}
+  - {fileID: 8108811549932500937}
+  - {fileID: 3222918131527843272}
+  - {fileID: 629568591579661935}
+  - {fileID: 8875584961589071493}
+  - {fileID: -5703039246456782174}
+  - {fileID: 6920529421594870945}
   dialogueNodes:
   - {fileID: -1406497122811799601}
-  - {fileID: -4714847101079049446}
-  - {fileID: 133077507055485140}
   - {fileID: -8936389048274184872}
-  - {fileID: 3975330852158489528}
-  - {fileID: -4518331481189103696}
-  - {fileID: 5668383227566017505}
-  - {fileID: -3207434698176955801}
+  - {fileID: -9140514925089200537}
+  - {fileID: 2192041326736385359}
+  - {fileID: 8108811549932500937}
+  - {fileID: 3222918131527843272}
+  - {fileID: 629568591579661935}
+  - {fileID: 8875584961589071493}
+  - {fileID: -5703039246456782174}
+  - {fileID: 6920529421594870945}
   _branchNodes:
   - {fileID: -1406497122811799601}
---- !u!114 &133077507055485140
+--- !u!114 &629568591579661935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -334,52 +256,307 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
-  m_Name: Text node
+  m_Name: Text
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1314.2001, y: 394.4}
+  position: {x: 3913.6414, y: 1239.4895}
   ports:
     keys:
     - input
     - output
     values:
     - _fieldName: input
-      _node: {fileID: 133077507055485140}
+      _node: {fileID: 629568591579661935}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: falseOutput
-        node: {fileID: -4714847101079049446}
+        node: {fileID: 8108811549932500937}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: output
-      _node: {fileID: 133077507055485140}
+      _node: {fileID: 629568591579661935}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: input
+        node: {fileID: 6920529421594870945}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 32adbc69cbabb4247a91592296757016
+  id: 26502445086d1d848b07b9bcdf2b82e2
   nodeName: Text node
   processed: 0
   entered: 0
   input: 0
   metaData:
-  - key: speaker
-    value: <test/>
+  - key: 
+    value: 
   - key: 
     value: 
   audioClip: {fileID: 0}
   syncTypewriter: 0
-  text: Jeg heter Lars du heter Ida :)
+  text: This is the false output branch.
   WaitForInput: 1
   output: 0
---- !u!114 &3975330852158489528
+--- !u!114 &2192041326736385359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
+  m_Name: Text
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2456, y: 472}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 2192041326736385359}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: output
+        node: {fileID: -9140514925089200537}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 2192041326736385359}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 8108811549932500937}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 82e9de035be309844a485074bb637ba4
+  nodeName: Text node
+  processed: 1
+  entered: 1
+  input: 0
+  metaData:
+  - key: 
+    value: 
+  - key: 
+    value: 
+  audioClip: {fileID: 0}
+  syncTypewriter: 0
+  text: 'Using the { "color": "yellow","text":"Conditional node"} in the node editor
+    you can set branching logic. Try adjusting the {"color": "blue","text":"floatExample"}
+    variable in the SampleTriggerDialogue component to see the different results!'
+  WaitForInput: 1
+  output: 0
+--- !u!114 &3222918131527843272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
+  m_Name: Text
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3976, y: 760}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 3222918131527843272}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: trueOutput
+        node: {fileID: 8108811549932500937}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 3222918131527843272}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 6920529421594870945}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: c099bf8a77104e14f86c76cc671fd25a
+  nodeName: Text node
+  processed: 1
+  entered: 1
+  input: 0
+  metaData:
+  - key: 
+    value: 
+  - key: 
+    value: 
+  audioClip: {fileID: 0}
+  syncTypewriter: 0
+  text: This is the "true output" branch.
+  WaitForInput: 1
+  output: 0
+--- !u!114 &6920529421594870945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1748ecfb8ebcf074aa58e427f8780315, type: 3}
+  m_Name: Text
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 4744, y: 1224}
+  ports:
+    keys:
+    - input
+    - output
+    values:
+    - _fieldName: input
+      _node: {fileID: 6920529421594870945}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: output
+        node: {fileID: 629568591579661935}
+        reroutePoints: []
+      - fieldName: output
+        node: {fileID: 3222918131527843272}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: output
+      _node: {fileID: 6920529421594870945}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 8875584961589071493}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: ac4dd693b62a6884289a02a9c81af5ad
+  nodeName: Text node
+  processed: 0
+  entered: 0
+  input: 0
+  metaData:
+  - key: 
+    value: 
+  - key: 
+    value: 
+  audioClip: {fileID: 0}
+  syncTypewriter: 0
+  text: 'You can even fire events using the Event Node! '
+  WaitForInput: 1
+  output: 0
+--- !u!114 &8108811549932500937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab49fcc53323dd84492cf44e66388d4d, type: 3}
+  m_Name: Conditional
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 3258.5603, y: 833.4923}
+  ports:
+    keys:
+    - input
+    - trueOutput
+    - falseOutput
+    values:
+    - _fieldName: input
+      _node: {fileID: 8108811549932500937}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: output
+        node: {fileID: 2192041326736385359}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: trueOutput
+      _node: {fileID: 8108811549932500937}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 3222918131527843272}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: falseOutput
+      _node: {fileID: 8108811549932500937}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: input
+        node: {fileID: 629568591579661935}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: f8c7575bf2770e3448f9181630efe4df
+  nodeName: Condition
+  processed: 1
+  entered: 1
+  input: 0
+  trueOutput: 0
+  falseOutput: 0
+  condition:
+  - type: 3
+    variable: floatExample
+    numberCondition: 1
+    stringCondition: 0
+    boolCondition: 0
+    floatTarget: 5
+    stringTarget: 
+    boolTarget: 0
+    intTarget: 0
+--- !u!114 &8875584961589071493
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -392,128 +569,46 @@ MonoBehaviour:
   m_Name: Event
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3352, y: 120}
+  position: {x: 5480, y: 1512}
   ports:
     keys:
     - input
     - output
     values:
     - _fieldName: input
-      _node: {fileID: 3975330852158489528}
+      _node: {fileID: 8875584961589071493}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: output
-        node: {fileID: -3207434698176955801}
+        node: {fileID: 6920529421594870945}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: output
-      _node: {fileID: 3975330852158489528}
+      _node: {fileID: 8875584961589071493}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: input
-        node: {fileID: -4518331481189103696}
+        node: {fileID: -5703039246456782174}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: d21d7440f02d22740b83671834c3fd2e
+  id: c9053b56577828d4fa29be45b9255b10
   nodeName: Event node
-  processed: 0
-  entered: 0
+  processed: 1
+  entered: 1
   input: 0
   output: 0
   events:
-  - eventName: myEvent
+  - eventName: rotateCube
     intParameter: 0
-    floatParameter: 420.69
+    floatParameter: 5
     stringParameter: 
     boolParameter: 0
-  - eventName: yourEvent
-    intParameter: 0
-    floatParameter: 0
-    stringParameter: '"Hello!"'
-    boolParameter: 0
   GoToNextNodeAutomatically: 0
---- !u!114 &5668383227566017505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e43e98fa1a3f7e4a9b5b6af3e085557, type: 3}
-  m_Name: Choice
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 2069.0266, y: 284.67087}
-  ports:
-    keys:
-    - choices
-    - input
-    - choices 0
-    - choices 1
-    values:
-    - _fieldName: choices
-      _node: {fileID: 5668383227566017505}
-      _typeQualifiedName: System.Collections.Generic.List`1[[DialogueChoice, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: input
-      _node: {fileID: 5668383227566017505}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: output
-        node: {fileID: -8936389048274184872}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: choices 0
-      _node: {fileID: 5668383227566017505}
-      _typeQualifiedName: DialogueChoice, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: input
-        node: {fileID: -3207434698176955801}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: choices 1
-      _node: {fileID: 5668383227566017505}
-      _typeQualifiedName: DialogueChoice, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  id: b7fbc5afc6c028848bce78decd6dea3d
-  nodeName: Choice Node
-  processed: 0
-  entered: 0
-  textPrompt: 
-  choices:
-  - choiceName: 
-    text: "Du er t\xF8ff!"
-    choiceNumber: 0
-  - choiceName: 
-    text: "Du er IKKE t\xF8ff!"
-    choiceNumber: 1
-  input: 0

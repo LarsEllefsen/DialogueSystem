@@ -8,7 +8,6 @@ using XNodeEditor;
 public class DialogueEventPropertyDrawer : PropertyDrawer
 {
     private DialogueEvent node;
-    private bool foldout = true;
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         Rect foldoutRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);

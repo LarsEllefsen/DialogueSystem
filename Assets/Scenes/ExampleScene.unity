@@ -414,6 +414,231 @@ MonoBehaviour:
     - Inspector
     - Inspector
     - Inspector
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Connect Port
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Moved Node
+    - Moved Node
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Selection Change
+    - Delete Node
+    - Selection Change
+    - Destroy Object
+    - Selection Change
+    - Moved Node
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Create Node
+    - Connect Port
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Create Node
+    - Connect Port
+    - Selection Change
+    - Moved Node
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Create Node
+    - Connect Port
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Create Node
+    - Connect Port
+    - Inspector
+    - Selection Change
+    - Moved Node
+    - Create Node
+    - Connect Port
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Create Cube
+    - Add MeshFilter
+    - Add MeshRenderer
+    - Add BoxCollider
+    - Create Cube
+    - Selection Change
+    - Move
+    - Inspector
+    - Inspector
+    - Inspector
+    - Move
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Move
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Move
+    - Move
+    - Move
+    - Move
+    - Move
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Move
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Create Node
+    - Connect Port
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Create Node
+    - Connect Port
+    - Inspector
 --- !u!4 &258181141
 Transform:
   m_ObjectHideFlags: 3
@@ -786,11 +1011,136 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 1
         m_RotationOrder: 4
+    - name: CustomEffect1
+      YPosAnimationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 136
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      XPosAnimationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.13504605
+          value: 0.46204987
+          inSlope: 0.009640223
+          outSlope: 0.009640223
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.259563
+        - serializedVersion: 3
+          time: 0.2899029
+          value: 0.08804339
+          inSlope: 0.006173476
+          outSlope: 0.006173476
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.2825275
+        - serializedVersion: 3
+          time: 0.40189376
+          value: 0.28951445
+          inSlope: -0.025046436
+          outSlope: -0.025046436
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.38865292
+        - serializedVersion: 3
+          time: 0.5
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 1
+        m_RotationOrder: 4
+    - name: CustomEffect2
+      YPosAnimationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: -0.5
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.5
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 0
+        m_RotationOrder: 4
+      XPosAnimationCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 0
+        m_RotationOrder: 4
   settings:
     multipleValidBranchesSelectionMode: 0
     HideDialoguePaneOnStart: 1
     textDisplayMode: 1
-    typewriterSpeed: 10
+    typewriterSpeed: 20
     typewriterSpeedMultiplier: 2
   dialogueCallbackActions:
     OnTextNodeEndEvents:
@@ -912,7 +1262,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960534242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -949,6 +1299,101 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1282338446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1282338450}
+  - component: {fileID: 1282338449}
+  - component: {fileID: 1282338448}
+  - component: {fileID: 1282338447}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1282338447
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282338446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1282338448
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282338446}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1282338449
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282338446}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1282338450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282338446}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.83}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1442492117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1521,6 +1966,7 @@ MonoBehaviour:
     effects: []
   graph: {fileID: 0}
   UiHandler: {fileID: 1442492118}
+  testCube: {fileID: 0}
 --- !u!4 &2065139776
 Transform:
   m_ObjectHideFlags: 0
