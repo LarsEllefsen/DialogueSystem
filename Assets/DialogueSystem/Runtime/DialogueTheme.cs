@@ -22,12 +22,10 @@ public class DialogueTheme
     public Dictionary<string, Color> colors;
 
     [Header("Effects")]
-    public AnimationCurve WaveAnimationCurve = new AnimationCurve(new Keyframe(0,-.5f), new Keyframe(.5f, 1), new Keyframe(1, -.5f));
-    [Space(10)]
     public AnimationCurve OnLetterAppearAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
     public AnimationCurve OnLetterAppearOpacity = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
     //[Header("Custom text effects")]
-
+    public List<TextEffect> effects;
 
     public DialogueTheme()
     {
@@ -43,8 +41,10 @@ public class DialogueTheme
             colors.Add(color.name.ToLower(), color.color);
         }
 
-        WaveAnimationCurve.preWrapMode = WrapMode.Loop;
-        WaveAnimationCurve.postWrapMode = WrapMode.Loop;
+        effects = new List<TextEffect>() { 
+            new TextEffect("Wave", new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0)), new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1), new Keyframe(1, -.5f)), true) 
+        };
+   
     }
 
     public void AddColor(string name, Color color)

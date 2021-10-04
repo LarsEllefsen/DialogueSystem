@@ -110,4 +110,17 @@ public class DialogueUI
     {
         _textGameObject.SetActive(toggle);
     }
+
+    public void RegisterTextEffectIndices(TextCommand command, int startIndex, int endIndex)
+    {
+        if(command.effect != null)
+        {
+            TextEffect fx = theme.effects.Find(x => x.name.ToLower() == command.effect.ToLower());
+            if(fx != null)
+            {
+                textEffects.SetEffectIndices(fx.name, startIndex, endIndex);
+            }
+        }
+
+    }
 }

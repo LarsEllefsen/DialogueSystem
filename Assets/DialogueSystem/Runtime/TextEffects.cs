@@ -41,6 +41,7 @@ public class TextEffects : MonoBehaviour
     private Dictionary<int, Color> colorIndices = new Dictionary<int, Color>();
     private List<int> waveIndices = new List<int>();
     private Dictionary<int, CharacterInfo> characterMap = new Dictionary<int, CharacterInfo>();
+    private Dictionary<string, List<int>> effectIndices = new Dictionary<string, List<int>>();
 
     public enum TextDisplayMode
     {
@@ -100,6 +101,31 @@ public class TextEffects : MonoBehaviour
         }
     }
 
+    public void SetEffectIndices(string effectName, int start, int end)
+    {
+        if (!effectIndices.ContainsKey(effectName))
+        {
+            List<int> indices = new List<int>();
+            for (int i = start; i < end; ++i)
+            {
+                indices.Add(i);
+            }
+            effectIndices.Add(effectName, indices);
+            Debug.Log(effectName);
+        } 
+        else
+        {
+            List<int> indices;
+            if(effectIndices.TryGetValue(effectName, out indices))
+            {
+                for (int i = start; i < end; ++i)
+                {
+                    indices.Add(i);
+                }
+                effectIndices[effectName] = indices;
+            }
+        }
+    }
 
     public void ClearAllIndices()
     {
@@ -136,7 +162,7 @@ public class TextEffects : MonoBehaviour
 
     public void Test()
     {
-        Debug.Log(callbackActions.OnBranchNodeEnd.GetInvocationList().Length);
+        Debug.Log(callbackActions.OnBranchNodeLeave.GetInvocationList().Length);
     }
 
     public void Typewriter(string text, Action<DialogueEventType> callback, float? typewriterSpeedOverride = null)
@@ -187,16 +213,36 @@ public class TextEffects : MonoBehaviour
 
         OnCharacterAppear(charIndex, charInfo, verts, vertexColors);
 
-
-        if (waveIndices.Contains(charIndex))
+        foreach(string effect in effectIndices.Keys)
         {
-
-            for (int j = 0; j < 4; ++j)
+            List<int> indices;
+            if (effectIndices.TryGetValue(effect, out indices))
             {
-                Vector3 orig = verts[charInfo.vertexIndex + j];
-                verts[charInfo.vertexIndex + j] = orig + new Vector3(0, theme.WaveAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f, 0);
+                if (indices.Contains(charIndex))
+                {
+                    TextEffect fx = theme.effects.Find(x => x.name == effect);
+                    for (int j = 0; j < 4; ++j)
+                    {
+                        Vector3 orig = verts[charInfo.vertexIndex + j];
+                        float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + orig.y * 0.01f) * 10f;
+                        float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
+                        verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
+                    }
+                }
             }
         }
+
+        //if (waveIndices.Contains(charIndex))
+        //{
+
+        //    for (int j = 0; j < 4; ++j)
+        //    {
+        //        Vector3 orig = verts[charInfo.vertexIndex + j];
+        //        float evaluatedXPosition = theme.WaveXAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
+        //        float evaluatedYPosition = theme.WaveYAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
+        //        verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
+        //    }
+        //}
 
         if (colorIndices.ContainsKey(charIndex))
         {
@@ -206,6 +252,11 @@ public class TextEffects : MonoBehaviour
                 vertexColors[charInfo.vertexIndex + j] = colorIndices[charIndex];
             }
         }
+    }
+
+    private void ApplyTextEffect(string effectName)
+    {
+
     }
 
     private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)

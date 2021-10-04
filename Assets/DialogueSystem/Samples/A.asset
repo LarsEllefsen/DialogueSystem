@@ -43,8 +43,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 7c470565db326964683a919e6cf5a0db
+  id: f7be5a7eaa3a3fe42bb4fb5d8387fd45
   nodeName: Text node
+  processed: 0
+  entered: 1
   input: 0
   metaData:
   - key: Speaker
@@ -53,8 +55,8 @@ MonoBehaviour:
     value: 
   audioClip: {fileID: 8300000, guid: d0893f6539060f9489349694cf4b7297, type: 3}
   syncTypewriter: 1
-  text: 'Ida, you are {"effect": "wave", "color": "red","text":"cool"} og {"effect":
-    "wave", "color": "yellow","text":"cute!"}'
+  text: 'Ida, you are {"effect": "custom", "color": "red","text":"SYNTX ERRl"} og
+    {"effect": "wave", "color": "yellow","text":"cute!"}'
   WaitForInput: 1
   output: 0
 --- !u!114 &-4714847101079049446
@@ -113,8 +115,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 1001b8eac479f4f468a8b7321aece442
+  id: 6f11092ea8048f745a8213b74451c99f
   nodeName: Condition
+  processed: 1
+  entered: 1
   input: 0
   trueOutput: 0
   falseOutput: 0
@@ -168,8 +172,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: e52ea4d54914c4e468773718f1374cdb
+  id: 63efbd4e20193dd47b170c596654d634
   nodeName: Text node
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: 
@@ -226,8 +232,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: b7959af976b21a74d92e7efd90642252
+  id: 6a3abc904f09b7e44910a0d7038727d9
   nodeName: Text node
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: 
@@ -269,8 +277,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: a334b54ed72aadd4dbed37b2cab1eff2
+  id: acc359228ccb2fe40b4ee2b6a19675e0
   nodeName: Branch
+  processed: 1
+  entered: 1
   output: 0
   branchCondition:
   - type: 0
@@ -354,8 +364,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c077687bf10ca0e418d3350df5ff79bb
+  id: 32adbc69cbabb4247a91592296757016
   nodeName: Text node
+  processed: 0
+  entered: 0
   input: 0
   metaData:
   - key: speaker
@@ -410,8 +422,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 6cb89d45efcabb9468ecf9d62b86f742
+  id: d21d7440f02d22740b83671834c3fd2e
   nodeName: Event node
+  processed: 0
+  entered: 0
   input: 0
   output: 0
   events:
@@ -490,8 +504,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  id: 29b2e90705d2e4947a8233f0fa8f2827
+  id: b7fbc5afc6c028848bce78decd6dea3d
   nodeName: Choice Node
+  processed: 0
+  entered: 0
   textPrompt: 
   choices:
   - choiceName: 

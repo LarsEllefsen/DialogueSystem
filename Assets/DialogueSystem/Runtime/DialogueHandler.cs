@@ -58,8 +58,12 @@ public class DialogueHandler
         OnTextStart,
         OnTextEnd,
         OnTextNodeLeave,
-        OnBranchEnd,
-        OnDialogueEnd,
+        OnEventNodeEnter,
+        OnEventNodeLeave,
+        OnBranchEnter,
+        OnBranchLeave,
+        OnDialogueEnter,
+        OnDialogueLeave,
         OnNodeEnter,
         OnNodeLeave,
     }
@@ -99,6 +103,7 @@ public class DialogueHandler
             IsRunning = true;
             CurrentState = DialogueSystem.State.Running;
             SetCurrentBranch();
+            InvokeCallbacks(DialogueEventType.OnDialogueEnter);
             TraverseGraph();
         } else
         {
@@ -165,8 +170,6 @@ public class DialogueHandler
 
         if(nodeType == "ChoiceNode")
         {
-            //TODO: Find out how to draw this to the screen in a "generic" way.
-            //TODO: Rewrite the state of the dialogue, so we can have some kind of "awaiting input" state.
             HandleChoiceNode(CurrentNode as ChoiceNode);
 
         }
@@ -174,7 +177,6 @@ public class DialogueHandler
         if(nodeType == "EventNode")
         {
             HandleEventNode(CurrentNode as EventNode);
-            //callbackActions.OnEventNodeEnd.Invoke(CurrentNode as EventNode);
         }
 
         if(nodeType == "WaitNode")
@@ -196,6 +198,7 @@ public class DialogueHandler
     {
         if (currentTextNode == null)
         {
+            InvokeCallbacks(DialogueEventType.OnTextNodeEnter);
             currentTextNode = CurrentNode;
             TextNode textNode = currentTextNode as TextNode;
             string text = ProcessText(CurrentNode.GetString()[0]);
@@ -216,6 +219,7 @@ public class DialogueHandler
             if (nextNode != null)
             {
                 CurrentNode = nextNode;
+                InvokeCallbacks(DialogueEventType.OnTextNodeLeave);
                 TraverseGraph();
             }
             else
@@ -276,6 +280,7 @@ public class DialogueHandler
             if(nextNode != null)
             {
                 CurrentNode = nextNode;
+                InvokeCallbacks(DialogueEventType.OnEventNodeLeave);
                 TraverseGraph();
                 return;
             }
@@ -293,7 +298,8 @@ public class DialogueHandler
             return;
         }
 
-        foreach(DialogueEvent dialogueEvent in node.events)
+        InvokeCallbacks(DialogueEventType.OnEventNodeEnter);
+        foreach (DialogueEvent dialogueEvent in node.events)
         {
             callbackActions.EventHandler.Invoke(dialogueEvent);
         }
@@ -343,7 +349,8 @@ public class DialogueHandler
     public void EndDialogue()
     {
         IsRunning = false;
-        InvokeCallbacks(DialogueEventType.OnDialogueEnd);
+        InvokeCallbacks(DialogueEventType.OnBranchLeave);
+        InvokeCallbacks(DialogueEventType.OnDialogueLeave);
         ui.ShowDialoguePane(false);
         ui.Reset();
         CurrentNode = null;
@@ -440,6 +447,7 @@ public class DialogueHandler
                 default:
                     break;
             }
+            InvokeCallbacks(DialogueEventType.OnBranchEnter);
         }
     }
 
@@ -555,13 +563,13 @@ public class DialogueHandler
                 callbackActions.OnTextNodeEndEvents?.Invoke(node);
             }
 
-            if(eventType == DialogueEventType.OnBranchEnd)
+            if(eventType == DialogueEventType.OnBranchLeave)
             {
-                callbackActions.OnBranchNodeEnd?.Invoke(CurrentBranch);
+                callbackActions.OnBranchNodeLeave?.Invoke(CurrentBranch);
                 callbackActions.OnBranchNodeEndEvents?.Invoke(CurrentBranch);
             }
 
-            if(eventType == DialogueEventType.OnDialogueEnd)
+            if(eventType == DialogueEventType.OnDialogueLeave)
             {
                 callbackActions.OnDialogueGraphEnd?.Invoke(CurrentGraph);
                 callbackActions.OnDialogueGraphEndEvents?.Invoke(CurrentGraph);
@@ -627,6 +635,7 @@ public class DialogueHandler
                 int cmdEndIndex = interpolatedText.IndexOf('}', i);
                 string substring = interpolatedText.Substring(i, cmdEndIndex - i + 1);
                 TextCommand cmd = JsonUtility.FromJson<TextCommand>(substring);
+                ui.RegisterTextEffectIndices(cmd, index, index + cmd.text.Length);
                 switch (cmd.effect)
                 {
                     case "wave":

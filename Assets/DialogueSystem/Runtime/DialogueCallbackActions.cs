@@ -15,10 +15,13 @@ public class DialogueCallbackActions
     public Action<TextNode> OnTextNodeEnd;
     public Action<TextNode> OnTextNodeLeave;
 
-    public Action<EventNode> OnEventNodeEnd;
+    public Action<EventNode> OnEventNodeEnter;
+    public Action<EventNode> OnEventNodeLeave;
 
-    public Action<BranchNode> OnBranchNodeEnd;
+    public Action<BranchNode> OnBranchNodeEnter;
+    public Action<BranchNode> OnBranchNodeLeave;
 
+    public Action<DialogueGraph> OnDialogueGraphEnter;
     public Action<DialogueGraph> OnDialogueGraphEnd;
 
     public Action<BaseNode> OnNodeEnter;
