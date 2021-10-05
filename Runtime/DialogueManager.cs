@@ -94,8 +94,8 @@ namespace DialogueSystem
 
         #region Readonly members
         public bool IsRunning { get { return _handler.IsRunning; } }
-        public bool isAnimating { get { return ui.isAnimating; } }
-        public bool speedUp { get { return ui.textEffects.speedUp; } }
+        public bool isAnimating { get { return Ui.isAnimating; } }
+        public bool speedUp { get { return Ui.textEffects.speedUp; } }
         public BaseNode CurrentNode
         {
             get
@@ -120,7 +120,7 @@ namespace DialogueSystem
             }
 
         }
-        public DialogueUI ui { get; private set; }
+        public DialogueUI Ui { get; private set; }
         public DialogueState CurrentState { get { return _handler.CurrentState; } }
         #endregion
 
@@ -135,34 +135,33 @@ namespace DialogueSystem
                 instance = this;
             }
 
-            ui = new DialogueUI(dialogueTextGameObject, dialoguePane, theme, settings, dialogueCallbackActions);
+            Ui = new DialogueUI(dialogueTextGameObject, dialoguePane, theme, settings, dialogueCallbackActions);
 
             if (settings != null)
             {
-                if (settings.HideDialoguePaneOnStart) ui.ShowDialoguePane(false);
+                if (settings.HideDialoguePaneOnStart) Ui.ShowDialoguePane(false);
             }
 
             if (_handler == null)
             {
-                _handler = new DialogueHandler(ui, settings, dialogueCallbackActions, dictionary, this);
+                _handler = new DialogueHandler(Ui, settings, dialogueCallbackActions, dictionary, this);
             }
 
         }
 
         public void SetTheme(DialogueTheme theme)
         {
-            ui.SetTheme(theme);
+            Ui.SetTheme(theme);
         }
 
         public void SetCallbackActions(DialogueCallbackActions callbackActions)
         {
             this.dialogueCallbackActions = callbackActions;
-            ui.SetCallbackActions(callbackActions);
+            Ui.SetCallbackActions(callbackActions);
 
         }
         public void RegisterEventHandler(Action<DialogueEvent> eventHandler)
         {
-            Debug.Log("Registered event handler!");
             dialogueCallbackActions.EventHandler += eventHandler;
         }
 
@@ -205,12 +204,12 @@ namespace DialogueSystem
         #region Typewriter Interactions
         public void ToggleSpeedUp(bool toggle)
         {
-            ui.textEffects.SpeedUp(toggle);
+            Ui.textEffects.SpeedUp(toggle);
         }
 
         public void EndLine()
         {
-            ui.textEffects.DisplayWholeText();
+            Ui.textEffects.DisplayWholeText();
         }
         #endregion
 

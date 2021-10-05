@@ -134,11 +134,11 @@ namespace DialogueSystem
                 {
                     CurrentNode = nextNode;
                     TraverseGraph();
-                }
-                else
+                } else
                 {
-                    Debug.LogWarning($"Branch {CurrentNode.name} is not connected to anything.");
+                    EndDialogue();
                 }
+
             }
 
             if (nodeType == "TextNode")
@@ -161,8 +161,9 @@ namespace DialogueSystem
                 }
                 else
                 {
-                    Debug.LogWarning($"Conditional node {CurrentNode.name} is not connected to anything.");
+                    EndDialogue();
                 }
+                
             }
 
             if (nodeType == "ChoiceNode")
@@ -188,6 +189,7 @@ namespace DialogueSystem
                 else
                 {
                     Debug.LogError("DialogueHandler has no attached MonoBehaviour. Wait node will be skipped.");
+                    OnWaitNodeEndCallback();
                 }
             }
         }
@@ -224,6 +226,7 @@ namespace DialogueSystem
                 {
                     EndDialogue();
                 }
+                
             }
         }
         public void HandleChoiceNode(ChoiceNode node, int choiceNum = -1)
@@ -262,7 +265,7 @@ namespace DialogueSystem
                 }
                 else
                 {
-                    Debug.LogWarning($"Choice node {CurrentNode.name}: Output port {choiceNum} is not connected to anything.");
+                    EndDialogue();
                 }
             }
             else
@@ -280,7 +283,11 @@ namespace DialogueSystem
                     CurrentNode = nextNode;
                     InvokeCallbacks(DialogueEventType.OnEventNodeLeave);
                     TraverseGraph();
-                    return;
+
+                }
+                else
+                {
+                    EndDialogue();
                 }
             }
 
@@ -293,13 +300,12 @@ namespace DialogueSystem
             if (callbackActions.EventHandler == null)
             {
                 Debug.LogError("No dialogue event handler is registered.");
-                return;
             }
 
             InvokeCallbacks(DialogueEventType.OnEventNodeEnter);
             foreach (DialogueEvent dialogueEvent in node.events)
             {
-                callbackActions.EventHandler.Invoke(dialogueEvent);
+                callbackActions.EventHandler?.Invoke(dialogueEvent);
             }
 
             if (node.GoToNextNodeAutomatically)
@@ -309,7 +315,10 @@ namespace DialogueSystem
                 {
                     CurrentNode = nextNode;
                     TraverseGraph();
-                    return;
+                }
+                else
+                {
+                    EndDialogue();
                 }
             }
         }
@@ -335,6 +344,10 @@ namespace DialogueSystem
             {
                 CurrentNode = nextNode;
                 TraverseGraph();
+            }
+            else
+            {
+                EndDialogue();
             }
         }
         private IEnumerator WaitNode(float seconds, Action onWaitEndCallback)

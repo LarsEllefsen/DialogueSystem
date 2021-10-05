@@ -155,7 +155,7 @@ public class SampleTriggerDialogue : MonoBehaviour
         {
             if (myEvent.eventName == "rotateCube")
             {
-                dialogueManager.ui.ShowDialoguePane(false);
+                dialogueManager.Ui.ShowDialoguePane(false);
                 StartCoroutine(Rotate(myEvent.floatParameter));
             }
 
