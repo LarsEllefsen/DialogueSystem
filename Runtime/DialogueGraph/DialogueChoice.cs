@@ -4,37 +4,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-[Serializable]
-public class DialogueChoice
+
+namespace DialogueSystem
 {
-    [SerializeField]
-    public string choiceName;
-    [SerializeField] public string text;
-
-    [HideInInspector]
-    public int choiceNumber;
-    
-
-    public DialogueChoice(string text, string name )
+    [Serializable]
+    public class DialogueChoice
     {
-        this.text = text;
-        this.choiceName = name;
+        [SerializeField]
+        public string choiceName;
+        [SerializeField] public string text;
+
+        [HideInInspector]
+        public int choiceNumber;
+
+
+        public DialogueChoice(string text, string name)
+        {
+            this.text = text;
+            this.choiceName = name;
+        }
+
     }
 
-}
-
-public class DialogueChoices
-{
-    public List<DialogueChoice> Choices { get; private set; }
-    public string TextPrompt { get; private set; }
-    public ChoiceNode _node;
-    
-
-    public DialogueChoices(List<DialogueChoice> choices, string textPrompt = null, ChoiceNode node = null)
+    public class DialogueChoices
     {
-        Choices = choices;
-        TextPrompt = textPrompt;
-        _node = node;
-    }
+        public List<DialogueChoice> Choices { get; private set; }
+        public string TextPrompt { get; private set; }
+        public ChoiceNode _node;
 
+
+        public DialogueChoices(List<DialogueChoice> choices, string textPrompt = null, ChoiceNode node = null)
+        {
+            Choices = choices;
+            TextPrompt = textPrompt;
+            _node = node;
+        }
+
+    }
 }

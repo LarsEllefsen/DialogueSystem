@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using DialogueSystem;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using XNodeEditor;
+
 
 [CustomPropertyDrawer(typeof(DialogueChoice))]
 public class DialogueChoicePropertyDrawer : PropertyDrawer

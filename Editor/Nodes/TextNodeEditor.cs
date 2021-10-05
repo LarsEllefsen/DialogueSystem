@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 using XNodeEditor;
+using DialogueSystem;
 
 [CustomNodeEditor(typeof(TextNode))]
 public class TextNodeEditor : NodeEditor

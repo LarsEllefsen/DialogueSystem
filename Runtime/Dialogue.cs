@@ -1,14 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[Serializable]
-public class Dialogue
-{
-    public string Name;
-    public Branch[] Branches;
-}
 
 [Serializable]
 public class Branch

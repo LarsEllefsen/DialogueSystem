@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using XNodeEditor;
+using DialogueSystem;
 
 [CustomPropertyDrawer(typeof(DialogueEvent))]
 public class DialogueEventPropertyDrawer : PropertyDrawer

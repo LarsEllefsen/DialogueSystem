@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DialogueSystem;
 
 public class SampleTriggerDialogue : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     public string testDict = "First initial value";
 
-    DialogueSystem dialogueSystem;
+    DialogueManager dialogueManager;
     SampleFlags flags;
     List<DialogueGameState> gameStateVariables = new List<DialogueGameState>();
 
@@ -30,12 +31,12 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     private void Start()
     {
-        dialogueSystem = DialogueSystem.instance;
+        dialogueManager = DialogueManager.instance;
         flags = GetComponent<SampleFlags>();
 
-        dialogueSystem.flags = flags.gameEventFlags;
-        dialogueSystem.dialogueCallbackActions.OnNodeLeave += OnNodeLeave;
-        dialogueSystem.dialogueCallbackActions.OnNodeEnter += OnNodeEnter;
+        dialogueManager.flags = flags.gameEventFlags;
+        dialogueManager.dialogueCallbackActions.OnNodeLeave += OnNodeLeave;
+        dialogueManager.dialogueCallbackActions.OnNodeEnter += OnNodeEnter;
 
         //dialogueSystem.CustomTestCondition = CustomTestCondition;
 
@@ -44,56 +45,56 @@ public class SampleTriggerDialogue : MonoBehaviour
 
         gameStateVariables.Add(new DialogueGameState(10f, "floatExample"));
 
-        dialogueSystem.SetDialogGameState(gameStateVariables);
-        dialogueSystem.OnChoiceDraw += OnChoiceDraw;
+        dialogueManager.SetDialogGameState(gameStateVariables);
+        dialogueManager.OnChoiceDraw += OnChoiceDraw;
 
-        dialogueSystem.dictionary.AddEntry("test", GetDictionaryValue);
-        dialogueSystem.dictionary.AddEntry("test2", "static value");
+        dialogueManager.dictionary.AddEntry("test", GetDictionaryValue);
+        dialogueManager.dictionary.AddEntry("test2", "static value");
         testDict = "Bing Bong Hansen";
 
-        dialogueSystem.RegisterEventHandler(TestEventHandler);
+        dialogueManager.RegisterEventHandler(TestEventHandler);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            if (dialogueSystem.IsRunning)
+            if (dialogueManager.IsRunning)
             {
-                if (dialogueSystem.isAnimating)
+                if (dialogueManager.isAnimating)
                 {
-                    dialogueSystem.EndLine();
+                    dialogueManager.EndLine();
                 }
                 else
                 {
-                    dialogueSystem.AdvanceDialogue();
+                    dialogueManager.AdvanceDialogue();
                 }
 
             }
             else
             {
-                dialogueSystem.StartDialogue();
+                dialogueManager.StartDialogue();
             }
         }
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            dialogueSystem.settings.typewriterSpeed = 1f;
+            dialogueManager.settings.typewriterSpeed = 1f;
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            dialogueSystem.settings.textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
+            dialogueManager.settings.textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
         }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if(dialogueSystem.CurrentState == DialogueSystem.State.Paused)
+            if(dialogueManager.CurrentState == DialogueState.Paused)
             {
-                dialogueSystem.Pause(false);
+                dialogueManager.Pause(false);
             } else
             {
-                dialogueSystem.Pause(true);
+                dialogueManager.Pause(true);
             }
         }
 
@@ -110,7 +111,7 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     public void OnLineStartCallback(TextNode node)
     {
-        string test = node.TryGetMetadataByKey("speaker", dialogueSystem.dictionary);
+        string test = node.TryGetMetadataByKey("speaker", dialogueManager.dictionary);
         if(test != null)
         {
             UiHandler.SetSpeakerName(test);
@@ -139,7 +140,7 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     public bool OnChoiceDraw(DialogueChoices node)
     {
-        UiHandler.RenderDialogueChoices(node, dialogueSystem);
+        UiHandler.RenderDialogueChoices(node, dialogueManager);
         return true;
     }
 
@@ -154,7 +155,7 @@ public class SampleTriggerDialogue : MonoBehaviour
         {
             if (myEvent.eventName == "rotateCube")
             {
-                dialogueSystem.ui.ShowDialoguePane(false);
+                dialogueManager.ui.ShowDialoguePane(false);
                 StartCoroutine(Rotate(myEvent.floatParameter));
             }
 
@@ -177,7 +178,7 @@ public class SampleTriggerDialogue : MonoBehaviour
             testCube.eulerAngles = new Vector3(testCube.eulerAngles.x, yRotation, testCube.eulerAngles.z);
             yield return null;
         }
-        dialogueSystem.AdvanceDialogue();
+        dialogueManager.AdvanceDialogue();
     }
 
 }

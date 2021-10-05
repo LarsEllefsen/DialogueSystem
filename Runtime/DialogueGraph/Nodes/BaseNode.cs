@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-public class BaseNode : Node
+namespace DialogueSystem
 {
-    public string id = null;
-    public string nodeName;
-    public virtual string NodeType => "BaseNode";
-
-    [HideInInspector]
-    public bool processed = false;
-    [HideInInspector]
-    public bool entered = false;
-
-    protected override void Init()
+    public class BaseNode : Node
     {
-        id = UnityEditor.GUID.Generate().ToString();
-        processed = false;
-        entered = false;
-        base.Init();
-    }
+        public string id = null;
+        public string nodeName;
+        public virtual string NodeType => "BaseNode";
 
-    public virtual string[] GetString()
-    {
-        return null;
-    }
+        [HideInInspector]
+        public bool processed = false;
+        [HideInInspector]
+        public bool entered = false;
 
-    public virtual string GetID()
-    {
-        return id;
-    }
+        protected override void Init()
+        {
+            id = UnityEditor.GUID.Generate().ToString();
+            processed = false;
+            entered = false;
+            base.Init();
+        }
 
-    public virtual void SetText(string[] text)
-    {
-    }
+        public virtual string[] GetString()
+        {
+            return null;
+        }
 
+        public virtual string GetID()
+        {
+            return id;
+        }
+
+        public virtual void SetText(string[] text)
+        {
+        }
+
+    }
 }

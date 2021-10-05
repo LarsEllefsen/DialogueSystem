@@ -3,26 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class DialogueSettings
+
+namespace DialogueSystem
 {
-    [SerializeField]
-    public MultipleValidBranchesSelectionMode multipleValidBranchesSelectionMode;
-
-    /* Enums */
     [Serializable]
-    public enum MultipleValidBranchesSelectionMode
+    public class DialogueSettings
     {
-        FIRST,
-        PRIORITY,
-        RANDOM
+        [SerializeField]
+        public MultipleValidBranchesSelectionMode multipleValidBranchesSelectionMode;
+
+        /* Enums */
+        [Serializable]
+        public enum MultipleValidBranchesSelectionMode
+        {
+            FIRST,
+            PRIORITY,
+            RANDOM
+        }
+
+        public bool HideDialoguePaneOnStart = true;
+
+        public TextEffects.TextDisplayMode textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
+
+        [Header("Typewriter")]
+        public float typewriterSpeed = 10f;
+        public float typewriterSpeedMultiplier = 2f;
     }
-
-    public bool HideDialoguePaneOnStart = true;
-
-    public TextEffects.TextDisplayMode textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
-
-    [Header("Typewriter")]
-    public float typewriterSpeed = 10f;
-    public float typewriterSpeedMultiplier = 2f;
 }

@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BranchNode : BaseNode
+namespace DialogueSystem
 {
-    public override string NodeType => "BranchNode";
-
-    [Output] public float output;
-
-    public List<DialogueConditional> branchCondition = new List<DialogueConditional>() { new DialogueConditional() };
-
-    protected override void Init()
+    public class BranchNode : BaseNode
     {
-        nodeName = "Branch";
-        base.Init();
-    }
+        public override string NodeType => "BranchNode";
 
-    public override string GetID()
-    {
-        return id;
+        [Output] public float output;
+
+        public List<DialogueConditional> branchCondition = new List<DialogueConditional>() { new DialogueConditional() };
+
+        protected override void Init()
+        {
+            nodeName = "Branch";
+            base.Init();
+        }
+
+        public override string GetID()
+        {
+            return id;
+        }
     }
 }

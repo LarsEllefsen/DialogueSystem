@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using DialogueSystem;
 using XNodeEditor;
 
 [CustomNodeEditor(typeof(ConditionalNode))]

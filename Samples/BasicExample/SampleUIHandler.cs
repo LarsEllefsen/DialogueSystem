@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DialogueSystem;
 
 public class SampleUIHandler : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class SampleUIHandler : MonoBehaviour
 
     }
 
-    public void RenderDialogueChoices(DialogueChoices dialogueChoices, DialogueSystem dialogueSystem)
+    public void RenderDialogueChoices(DialogueChoices dialogueChoices, DialogueManager dialogueSystem)
     {
         DialogueWindow.SetActive(false);
         ChoicePanel.gameObject.SetActive(true);
