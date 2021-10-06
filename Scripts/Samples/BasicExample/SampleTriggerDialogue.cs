@@ -38,11 +38,6 @@ public class SampleTriggerDialogue : MonoBehaviour
         dialogueManager.dialogueCallbackActions.OnNodeLeave += OnNodeLeave;
         dialogueManager.dialogueCallbackActions.OnNodeEnter += OnNodeEnter;
 
-        //dialogueSystem.CustomTestCondition = CustomTestCondition;
-
-        //NodeParser parser = new NodeParser();
-        //parser.GenerateGraphFromScript(graph);
-
         gameStateVariables.Add(new DialogueGameState(10f, "floatExample"));
 
         dialogueManager.SetDialogGameState(gameStateVariables);
@@ -98,15 +93,6 @@ public class SampleTriggerDialogue : MonoBehaviour
             }
         }
 
-    }
-
-    public bool CustomTestCondition(Condition condition)
-    {
-        if (condition.Flag == "X")
-        {
-            return true;
-        }
-        return false;
     }
 
     public void OnLineStartCallback(TextNode node)

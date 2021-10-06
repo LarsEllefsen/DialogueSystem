@@ -112,7 +112,6 @@ namespace DialogueSystem
                     indices.Add(i);
                 }
                 effectIndices.Add(effectName, indices);
-                Debug.Log(effectName);
             }
             else
             {
@@ -149,7 +148,6 @@ namespace DialogueSystem
             if (IsAnimating)
             {
                 _textComponent.maxVisibleCharacters = _textComponent.textInfo.characterCount;
-                //currentCallback();
                 IsAnimating = false;
             }
         }
@@ -171,7 +169,6 @@ namespace DialogueSystem
         {
             _textComponent.maxVisibleCharacters = 0;
             _textComponent.text = text;
-            //currentCallback = callback;
             StartCoroutine(TypewriterEffect(callback, typewriterSpeedOverride));
         }
 
@@ -235,18 +232,6 @@ namespace DialogueSystem
                 }
             }
 
-            //if (waveIndices.Contains(charIndex))
-            //{
-
-            //    for (int j = 0; j < 4; ++j)
-            //    {
-            //        Vector3 orig = verts[charInfo.vertexIndex + j];
-            //        float evaluatedXPosition = theme.WaveXAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
-            //        float evaluatedYPosition = theme.WaveYAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
-            //        verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
-            //    }
-            //}
-
             if (colorIndices.ContainsKey(charIndex))
             {
 
@@ -255,11 +240,6 @@ namespace DialogueSystem
                     vertexColors[charInfo.vertexIndex + j] = colorIndices[charIndex];
                 }
             }
-        }
-
-        private void ApplyTextEffect(string effectName)
-        {
-
         }
 
         private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)
@@ -309,7 +289,6 @@ namespace DialogueSystem
 
         }
 
-        // Update is called once per frame
         void LateUpdate()
         {
 
@@ -336,8 +315,6 @@ namespace DialogueSystem
 
                         _textComponent.UpdateGeometry(meshInfo.mesh, i);
                     }
-
-                    //_textComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
                 }
             }
         }

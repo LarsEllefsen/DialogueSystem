@@ -391,6 +391,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474576357}
   m_CullTransparentMesh: 0
+--- !u!1 &604828316
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 604828318}
+  - component: {fileID: 604828317}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &604828317
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604828316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Remove MonoBehaviour
+--- !u!4 &604828318
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604828316}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &867790714
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,163 +531,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867790714}
   m_CullTransparentMesh: 0
---- !u!1 &872919672
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 872919674}
-  - component: {fileID: 872919673}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &872919673
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872919672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Create Node
-    - Connect Port
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Inspector
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Inspector
-    - Selection Change
---- !u!4 &872919674
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 872919672}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &930295443
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +541,6 @@ GameObject:
   m_Component:
   - component: {fileID: 930295445}
   - component: {fileID: 930295444}
-  - component: {fileID: 930295446}
   m_Layer: 0
   m_Name: DialogueSystem
   m_TagString: Untagged
@@ -661,25 +567,15 @@ MonoBehaviour:
   dialoguePane: {fileID: 1979774481}
   dialogueTextGameObject: {fileID: 17097734}
   theme:
-    red:
-      r: 0.9
-      g: 0.435
-      b: 0.317
-      a: 1
-    yellow:
-      r: 0.913
-      g: 0.768
-      b: 0.415
-      a: 1
-    blue:
-      r: 0.149
-      g: 0.274
-      b: 0.325
-      a: 1
+    red: {r: 0.9, g: 0.435, b: 0.317, a: 1}
+    yellow: {r: 0.913, g: 0.768, b: 0.415, a: 1}
+    blue: {r: 0.149, g: 0.274, b: 0.325, a: 1}
     customColors: []
     OnLetterAppearAnimationCurve:
+      serializedVersion: 2
       m_Curve:
-      - time: 0
+      - serializedVersion: 3
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -687,7 +583,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - time: 1
+      - serializedVersion: 3
+        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -699,8 +596,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     OnLetterAppearOpacity:
+      serializedVersion: 2
       m_Curve:
-      - time: 0
+      - serializedVersion: 3
+        time: 0
         value: 1
         inSlope: 0
         outSlope: 0
@@ -708,7 +607,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - time: 1
+      - serializedVersion: 3
+        time: 1
         value: 1
         inSlope: 0
         outSlope: 0
@@ -722,8 +622,10 @@ MonoBehaviour:
     effects:
     - name: Wave
       YPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: -0.5
           inSlope: 0
           outSlope: 0
@@ -731,7 +633,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 0.5
+        - serializedVersion: 3
+          time: 0.5
           value: 1
           inSlope: 0
           outSlope: 0
@@ -739,7 +642,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 1
+        - serializedVersion: 3
+          time: 1
           value: -0.5
           inSlope: 0
           outSlope: 0
@@ -751,8 +655,10 @@ MonoBehaviour:
         m_PostInfinity: 1
         m_RotationOrder: 4
       XPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: 0
           inSlope: 0
           outSlope: 0
@@ -760,7 +666,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 1
+        - serializedVersion: 3
+          time: 1
           value: 0
           inSlope: 0
           outSlope: 0
@@ -773,8 +680,10 @@ MonoBehaviour:
         m_RotationOrder: 4
     - name: CustomEffect1
       YPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: 0
           inSlope: 0
           outSlope: 0
@@ -782,11 +691,12 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 1
+        - serializedVersion: 3
+          time: 1
           value: 0
           inSlope: 0
           outSlope: 0
-          tangentMode: 136
+          tangentMode: 160
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
@@ -794,8 +704,10 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       XPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: 0
           inSlope: 0
           outSlope: 0
@@ -803,7 +715,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 0.13504605
+        - serializedVersion: 3
+          time: 0.13504605
           value: 0.46204987
           inSlope: 0.009640223
           outSlope: 0.009640223
@@ -811,7 +724,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.259563
-        - time: 0.2899029
+        - serializedVersion: 3
+          time: 0.2899029
           value: 0.08804339
           inSlope: 0.006173476
           outSlope: 0.006173476
@@ -819,7 +733,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.2825275
-        - time: 0.40189376
+        - serializedVersion: 3
+          time: 0.40189376
           value: 0.28951445
           inSlope: -0.025046436
           outSlope: -0.025046436
@@ -827,7 +742,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.38865292
-        - time: 0.5
+        - serializedVersion: 3
+          time: 0.5
           value: 0
           inSlope: 2
           outSlope: 2
@@ -840,8 +756,10 @@ MonoBehaviour:
         m_RotationOrder: 4
     - name: CustomEffect2
       YPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: -0.5
           inSlope: 2
           outSlope: 2
@@ -849,7 +767,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 1
+        - serializedVersion: 3
+          time: 1
           value: 0.5
           inSlope: 0
           outSlope: 0
@@ -861,8 +780,10 @@ MonoBehaviour:
         m_PostInfinity: 0
         m_RotationOrder: 4
       XPosAnimationCurve:
+        serializedVersion: 2
         m_Curve:
-        - time: 0
+        - serializedVersion: 3
+          time: 0
           value: 0
           inSlope: 0
           outSlope: 0
@@ -870,7 +791,8 @@ MonoBehaviour:
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        - time: 1
+        - serializedVersion: 3
+          time: 1
           value: 1
           inSlope: 0
           outSlope: 0
@@ -887,25 +809,19 @@ MonoBehaviour:
     textDisplayMode: 1
     typewriterSpeed: 20
     typewriterSpeedMultiplier: 2
-  dictionary:
-    entries: []
   dialogueCallbackActions:
     OnTextNodeEndEvents:
       m_PersistentCalls:
         m_Calls: []
-      m_CallsDirty: 1
     OnBranchNodeEndEvents:
       m_PersistentCalls:
         m_Calls: []
-      m_CallsDirty: 1
     OnDialogueGraphEndEvents:
       m_PersistentCalls:
         m_Calls: []
-      m_CallsDirty: 1
     OnEventNodeEndEvents:
       m_PersistentCalls:
         m_Calls: []
-      m_CallsDirty: 1
 --- !u!4 &930295445
 Transform:
   m_ObjectHideFlags: 0
@@ -920,22 +836,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &930295446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930295443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99633bffec9637d409ef92ddf0a2d883, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 2065139778}
-  dialogueSystem: {fileID: 0}
-  OnLetterAppearSound: {fileID: 0}
-  <CurrentState>k__BackingField: 0
 --- !u!1 &960534242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,28 +1562,16 @@ MonoBehaviour:
   folderName: Test
   fileName: test
   testDict: First initial value
-  dialogueManager: {fileID: 0}
-  flags: {fileID: 0}
   alternativeTheme:
-    red:
-      r: 1
-      g: 0
-      b: 0
-      a: 1
-    yellow:
-      r: 0.99034953
-      g: 1
-      b: 0
-      a: 1
-    blue:
-      r: 0
-      g: 0.35274744
-      b: 1
-      a: 1
+    red: {r: 1, g: 0, b: 0, a: 1}
+    yellow: {r: 0.99034953, g: 1, b: 0, a: 1}
+    blue: {r: 0, g: 0.35274744, b: 1, a: 1}
     customColors: []
     OnLetterAppearAnimationCurve:
+      serializedVersion: 2
       m_Curve:
-      - time: 0
+      - serializedVersion: 3
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1691,7 +1579,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - time: 1
+      - serializedVersion: 3
+        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1703,8 +1592,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     OnLetterAppearOpacity:
+      serializedVersion: 2
       m_Curve:
-      - time: 0
+      - serializedVersion: 3
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -1712,7 +1603,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0
         outWeight: 0
-      - time: 1
+      - serializedVersion: 3
+        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
