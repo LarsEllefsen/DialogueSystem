@@ -57,8 +57,6 @@ namespace DialogueSystem
                 };
             list.onSelectCallback =
                 (ReorderableList rl) => {
-                    Debug.Log(rl.index);
-                    Debug.Log(list.index);
                     reorderableListIndex = rl.index;
                 };
             list.onReorderCallback =
@@ -109,14 +107,12 @@ namespace DialogueSystem
                             return;
                         }
                         arrayData.DeleteArrayElementAtIndex(index);
-                    // Error handling. If the following happens too often, file a bug report at https://github.com/Siccity/xNode/issues
                     if (ilist.Count <= arrayData.arraySize)
                         {
                             while (ilist.Count <= arrayData.arraySize)
                             {
                                 arrayData.DeleteArrayElementAtIndex(arrayData.arraySize - 1);
                             }
-                            UnityEngine.Debug.LogWarning("Array size exceeded dynamic ports size. Excess items removed.");
                         }
                         serializedObject.ApplyModifiedProperties();
                         serializedObject.Update();

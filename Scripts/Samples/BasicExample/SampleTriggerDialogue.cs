@@ -11,7 +11,7 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     public string testDict = "First initial value";
 
-    DialogueManager dialogueManager;
+    Dialogue dialogueManager;
     SampleFlags flags;
     List<DialogueGameState> gameStateVariables = new List<DialogueGameState>();
 
@@ -31,7 +31,7 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     private void Start()
     {
-        dialogueManager = DialogueManager.instance;
+        dialogueManager = Dialogue.instance;
         flags = GetComponent<SampleFlags>();
 
         dialogueManager.flags = flags.gameEventFlags;

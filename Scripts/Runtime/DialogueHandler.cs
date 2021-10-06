@@ -19,7 +19,7 @@ namespace DialogueSystem
         public DialogueState CurrentState { get; private set; }
 
         /*Private */
-        private DialogueManager.State PreviousState;
+        private DialogueState PreviousState;
 
         /*
          * Public  

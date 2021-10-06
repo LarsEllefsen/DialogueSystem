@@ -6,9 +6,9 @@ using XNode;
 
 namespace DialogueSystem
 {
-    public class DialogueManager : MonoBehaviour
+    public class Dialogue : MonoBehaviour
     {
-        public static DialogueManager instance { get; private set; }
+        public static Dialogue instance { get; private set; }
 
         /* Private members */
         private DialogueHandler _handler;
@@ -78,18 +78,6 @@ namespace DialogueSystem
             {
                 _handler.gameStateVariables = value;
             }
-        }
-
-        /*State Enum*/
-        public enum State
-        {
-            NotRunning,
-            Idle,
-            Running,
-            Animating,
-            AwaitingChoice,
-            Waiting,
-            Paused,
         }
 
         #region Readonly members
@@ -242,8 +230,6 @@ namespace DialogueSystem
 
         public void SelectDialogueChoice(int choiceNum)
         {
-            //TODO: Figure out how we should handle this.
-            Debug.Log(choiceNum);
             if (CurrentState != DialogueState.AwaitingChoice)
             {
                 Debug.LogWarning("The dialogue system is not awaiting a player choice. Current node is " + _handler.CurrentNode.NodeType);

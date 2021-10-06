@@ -71,7 +71,6 @@ public class ConditionalEditor : PropertyDrawer
             EditorGUI.PropertyField(conditionRect, target, GUIContent.none);
         } 
 
-        //Debug.Log(property.FindPropertyRelative("type").enumValueIndex);
 
         EditorGUI.EndProperty();
     }

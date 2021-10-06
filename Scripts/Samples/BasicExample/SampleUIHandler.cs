@@ -19,7 +19,7 @@ public class SampleUIHandler : MonoBehaviour
 
     }
 
-    public void RenderDialogueChoices(DialogueChoices dialogueChoices, DialogueManager dialogueSystem)
+    public void RenderDialogueChoices(DialogueChoices dialogueChoices, Dialogue dialogueSystem)
     {
         DialogueWindow.SetActive(false);
         ChoicePanel.gameObject.SetActive(true);

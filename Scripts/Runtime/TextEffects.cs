@@ -160,11 +160,6 @@ namespace DialogueSystem
             }
         }
 
-        public void Test()
-        {
-            Debug.Log(callbackActions.OnBranchNodeLeave.GetInvocationList().Length);
-        }
-
         public void Typewriter(string text, Action<DialogueEventType> callback, float? typewriterSpeedOverride = null)
         {
             _textComponent.maxVisibleCharacters = 0;

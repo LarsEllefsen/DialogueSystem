@@ -28,7 +28,6 @@ namespace DialogueSystem
                 _text = _textGameObject.GetComponent<TMP_Text>();
                 if (_text == null)
                 {
-                    Debug.Log("Why");
                     _text = _textGameObject.AddComponent<TMP_Text>();
                 }
             }

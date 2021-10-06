@@ -11,7 +11,7 @@ namespace DialogueSystem
     {
 
         public AudioSource audioSource;
-        public DialogueManager dialogueSystem;
+        public Dialogue dialogueSystem;
 
         public AudioClip OnLetterAppearSound;
 
@@ -36,14 +36,10 @@ namespace DialogueSystem
 
             if (dialogueSystem == null)
             {
-                dialogueSystem = DialogueManager.instance;
+                dialogueSystem = Dialogue.instance;
                 if (dialogueSystem == null)
                 {
-                    Debug.LogError("Dialogue system missing on Dialogue Audio component!");
-                }
-                else
-                {
-                    Debug.Log("all gucci");
+                    Debug.LogError("Dialogue component missing on Dialogue Audio component!");
                 }
             }
 
