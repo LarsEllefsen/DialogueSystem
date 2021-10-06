@@ -1,7 +1,8 @@
 {
     "name": "com.larsellefsen.dialoguesystem.editor",
     "references": [
-        "GUID:728e492162132f64d8c442f8dd28ea9d"
+        "GUID:728e492162132f64d8c442f8dd28ea9d",
+        "GUID:002c1bbed08fa44d282ef34fd5edb138"
     ],
     "includePlatforms": [],
     "excludePlatforms": [
