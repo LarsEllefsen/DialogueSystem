@@ -1,0 +1,17 @@
+{
+    "name": "com.larsellefsen.dialoguesystem.editor",
+    "references": [
+        "GUID:728e492162132f64d8c442f8dd28ea9d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Editor"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
