@@ -2,12 +2,16 @@
     "name": "com.larsellefsen.dialoguesystem.editor",
     "references": [
         "GUID:728e492162132f64d8c442f8dd28ea9d",
-        "GUID:002c1bbed08fa44d282ef34fd5edb138"
+        "GUID:002c1bbed08fa44d282ef34fd5edb138",
+        "GUID:b8e24fd1eb19b4226afebb2810e3c19b"
     ],
-    "includePlatforms": [],
-    "excludePlatforms": [
-        "Editor"
+    "includePlatforms": [
+        "Editor",
+        "macOSStandalone",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
     ],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
