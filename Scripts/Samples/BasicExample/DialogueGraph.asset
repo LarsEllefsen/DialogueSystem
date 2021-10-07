@@ -43,7 +43,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: ccdb7c71a94ee28418ea05a8fb7c3820
+  id: 93f134b3581deed4eaade0d52314c4b9
   nodeName: Text node
   processed: 0
   entered: 0
@@ -55,9 +55,10 @@ MonoBehaviour:
     value: 
   audioClip: {fileID: 0}
   syncTypewriter: 0
-  text: 'You can add  {"effect": "wave", "color": "yellow","text":"text effects!"}
-    and extend it with your  {"effect": "customEffect1", "color": "red","text":"own
-    effects"} through the  {"effect": "customEffect2" ,"text":"inspector."}'
+  text: 'You can add  {"effect": "wave", "color": "blue","text":"text effects!"}
+    and {"color":"green", "text":"extend"} it with your  {"effect": "customEffect1",
+    "color": "red","text":"own effects"} through the  {"effect": "customEffect2",
+    "color":"yellow","text":"inspector."}'
   WaitForInput: 1
   output: 0
 --- !u!114 &-8936389048274184872
@@ -103,7 +104,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 993125ef9e4261c4aae5576616b4b06f
+  id: c0aba723c1fb87a4296d79bab20dce62
   nodeName: Text node
   processed: 0
   entered: 0
@@ -115,8 +116,8 @@ MonoBehaviour:
     value: 
   audioClip: {fileID: 0}
   syncTypewriter: 0
-  text: This is a simple example on how to use the dialogue system! Press Space to
-    advance the dialogue.
+  text: ' {"effect":"wave", "text":"this"} is a {"effect":"bounce", "text":" basic"}
+    example on how to use the dialogue system! Press Space to advance the dialogue.'
   WaitForInput: 1
   output: 0
 --- !u!114 &-5703039246456782174
@@ -162,7 +163,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 746edeaa6d2a4744cb6bb45746ae1d38
+  id: 6410961db2a45274c9722c01d6bcf609
   nodeName: Text node
   processed: 0
   entered: 0
@@ -207,7 +208,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: cc92929fd27f2934cb2f6f1ad45f1eac
+  id: eb7373492246e494981359370a8dcb3d
   nodeName: Branch
   processed: 0
   entered: 0
@@ -294,7 +295,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c0dc4cb8fe81411409fbc5153c9eed0c
+  id: b2303cbfd74776245bf678c55283be50
   nodeName: Text node
   processed: 0
   entered: 0
@@ -333,8 +334,8 @@ MonoBehaviour:
     - _fieldName: choices
       _node: {fileID: 931038687958669610}
       _typeQualifiedName: System.Collections.Generic.List`1[[DialogueSystem.DialogueChoice,
-        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+        com.larsellefsen.dialoguesystem.runtime, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 1
       _connectionType: 0
@@ -354,8 +355,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: choices 0
       _node: {fileID: 931038687958669610}
-      _typeQualifiedName: DialogueSystem.DialogueChoice, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: DialogueSystem.DialogueChoice, com.larsellefsen.dialoguesystem.runtime,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
@@ -363,14 +364,14 @@ MonoBehaviour:
       _dynamic: 1
     - _fieldName: choices 1
       _node: {fileID: 931038687958669610}
-      _typeQualifiedName: DialogueSystem.DialogueChoice, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: DialogueSystem.DialogueChoice, com.larsellefsen.dialoguesystem.runtime,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  id: 2e3d4d0722905d3499943175d21abbc2
+  id: 3d8e64368ad3ad7489f1b07e35cc2efc
   nodeName: Choice Node
   processed: 0
   entered: 0
@@ -426,7 +427,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 5727893f2a7449f42be7ab3a70a5a2c2
+  id: 215a96e5e34880442a00c2457edcab69
   nodeName: Text node
   processed: 0
   entered: 0
@@ -486,7 +487,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 58a5a5a4950a4e947a1b5f6310636f98
+  id: 9525582d768d912499e6efa92dcd2d01
   nodeName: Text node
   processed: 0
   entered: 0
@@ -547,7 +548,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: addf665c5b3532d45b53d4a59f72735b
+  id: 800dc445d96edf549861b1e1ab542cd0
   nodeName: Text node
   processed: 0
   entered: 0
@@ -618,7 +619,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 9277dbe14d615da439cf30bde8fe073b
+  id: e1a2b63fef5e4354b89449ebba4c535d
   nodeName: Condition
   processed: 0
   entered: 0
@@ -678,7 +679,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: f90e845dbc292594fb37d1b0cc7f4a90
+  id: 1498475a8f080224bbb22ed1e1780640
   nodeName: Event node
   processed: 0
   entered: 0

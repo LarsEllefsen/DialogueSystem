@@ -36,11 +36,9 @@ namespace DialogueSystem
                 Debug.LogError("Dialogue UI is missing dialogue text gameobject");
             }
 
-
-
-            this.settings = settings == null ? new DialogueSettings() : settings;
+            this.settings = settings == null ? ScriptableObject.CreateInstance<DialogueSettings>() : settings;
             this.callbackActions = callbackActions;
-            theme = defaultTheme == null ? new DialogueTheme() : defaultTheme;
+            theme = defaultTheme == null ? ScriptableObject.CreateInstance<DialogueTheme>() : defaultTheme;
 
             textEffects = _text.gameObject.AddComponent<TextEffects>();
             textEffects.Init(theme, settings, callbackActions);

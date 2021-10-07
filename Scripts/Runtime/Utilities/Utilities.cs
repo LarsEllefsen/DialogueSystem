@@ -70,6 +70,57 @@ namespace DialogueSystem
             return interpolatedString;
         }
 
+        public static void RotateVertices(float degrees, ref Vector3[] vertices)
+        {
+            Vector3 center = CalculateCenter(vertices);//new Vector3(x, y, z);//any V3 you want as the pivot point.
+            center.z = vertices[0].z;
+            Debug.DrawLine(center, center+Vector3.up * 5);
+            Quaternion newRotation = new Quaternion();
+            newRotation.eulerAngles = new Vector3(0, 0, degrees);//the degrees the vertices are to be rotated, for example (0,90,0) 
+
+            for (int i = 0; i < vertices.Length; i++)
+            {//vertices being the array of vertices of your mesh
+                vertices[i] = newRotation * (vertices[i] - center) + center;
+            }
+        }
+
+        public static void RotateVertex(float degrees, ref Vector3 vertex, Vector3 center)
+        {
+            Quaternion newRotation = new Quaternion();
+            newRotation.eulerAngles = new Vector3(0, 0, degrees);//the degrees the vertices are to be rotated, for example (0,90,0) 
+
+
+            vertex = newRotation * (vertex - center) + center;
+            
+        }
+
+        public static Vector3 CalculateCenter(Vector3[] vertices)
+        {
+            //Triangle 1
+            float tx1 = (vertices[0].x + vertices[1].x + vertices[3].x) / 3;
+            float ty1 = (vertices[0].y + vertices[1].y + vertices[3].y) / 3;
+
+            //Triangel 2
+            float tx2 = (vertices[1].x + vertices[2].x + vertices[3].x) / 3;
+            float ty2 = (vertices[1].y + vertices[2].y + vertices[3].y) / 3;
+
+            float midx = (tx1 + tx2) / 2;
+            float midy = (ty1 + ty2) / 2;
+            return new Vector3(midx, midy, 0);
+        }
+
+        public static void ScaleVertices(float scale, ref Vector3[] vertices)
+        {
+            Vector3 center = CalculateCenter(vertices);
+
+            for (int i = 0; i < vertices.Length; i++)
+            {//vertices being the array of vertices of your mesh
+                vertices[i] = (vertices[i] - center) * scale + center;
+            }
+
+
+        }
+
     }
 }
 

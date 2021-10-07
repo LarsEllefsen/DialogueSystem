@@ -74,12 +74,12 @@ public class SampleTriggerDialogue : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            dialogueManager.settings.typewriterSpeed = 1f;
+            dialogueManager.ToggleSpeedUp(!dialogueManager.speedUp);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            dialogueManager.settings.textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
+            dialogueManager.Ui.theme.ChangeColor("red", Color.green);
         }
 
         if (Input.GetKeyDown(KeyCode.P))

@@ -123,6 +123,16 @@ namespace DialogueSystem
                 instance = this;
             }
 
+            if(theme == null)
+            {
+                theme = ScriptableObject.CreateInstance<DialogueTheme>();
+            }
+
+            if(settings == null)
+            {
+                settings = ScriptableObject.CreateInstance<DialogueSettings>();
+            }
+
             Ui = new DialogueUI(dialogueTextGameObject, dialoguePane, theme, settings, dialogueCallbackActions);
 
             if (settings != null)

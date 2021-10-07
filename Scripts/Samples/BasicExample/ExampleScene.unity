@@ -257,6 +257,472 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 17097734}
   m_CullTransparentMesh: 0
+--- !u!1 &173281691
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 173281693}
+  - component: {fileID: 173281692}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &173281692
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173281691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords: []
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Inspector
+    - Selection Change
+--- !u!4 &173281693
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173281691}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474576357
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,70 +857,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474576357}
   m_CullTransparentMesh: 0
---- !u!1 &604828316
-GameObject:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 604828318}
-  - component: {fileID: 604828317}
-  m_Layer: 0
-  m_Name: UndoProRecords
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &604828317
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604828316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  undoProRecords: []
-  undoState:
-    redoRecords: []
-    undoRecords:
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Selection Change
-    - Remove MonoBehaviour
---- !u!4 &604828318
-Transform:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604828316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &867790714
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,249 +968,8 @@ MonoBehaviour:
   dialogueGraph: {fileID: 11400000, guid: 433020d8fe1d8dc44965943f8e5cd014, type: 2}
   dialoguePane: {fileID: 1979774481}
   dialogueTextGameObject: {fileID: 17097734}
-  theme:
-    red: {r: 0.9, g: 0.435, b: 0.317, a: 1}
-    yellow: {r: 0.913, g: 0.768, b: 0.415, a: 1}
-    blue: {r: 0.149, g: 0.274, b: 0.325, a: 1}
-    customColors: []
-    OnLetterAppearAnimationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    OnLetterAppearOpacity:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    effects:
-    - name: Wave
-      YPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: -0.5
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.5
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: -0.5
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 1
-        m_RotationOrder: 4
-      XPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 1
-        m_RotationOrder: 4
-    - name: CustomEffect1
-      YPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 160
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      XPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.13504605
-          value: 0.46204987
-          inSlope: 0.009640223
-          outSlope: 0.009640223
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.259563
-        - serializedVersion: 3
-          time: 0.2899029
-          value: 0.08804339
-          inSlope: 0.006173476
-          outSlope: 0.006173476
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.2825275
-        - serializedVersion: 3
-          time: 0.40189376
-          value: 0.28951445
-          inSlope: -0.025046436
-          outSlope: -0.025046436
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.38865292
-        - serializedVersion: 3
-          time: 0.5
-          value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 1
-        m_RotationOrder: 4
-    - name: CustomEffect2
-      YPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: -0.5
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 0.5
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 0
-        m_RotationOrder: 4
-      XPosAnimationCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 0
-        m_RotationOrder: 4
-  settings:
-    multipleValidBranchesSelectionMode: 0
-    HideDialoguePaneOnStart: 1
-    textDisplayMode: 1
-    typewriterSpeed: 20
-    typewriterSpeedMultiplier: 2
+  theme: {fileID: 11400000, guid: fc3fc0c051baac2448bfe70f42b6d4b0, type: 2}
+  settings: {fileID: 0}
   dialogueCallbackActions:
     OnTextNodeEndEvents:
       m_PersistentCalls:
@@ -1562,60 +1723,7 @@ MonoBehaviour:
   folderName: Test
   fileName: test
   testDict: First initial value
-  alternativeTheme:
-    red: {r: 1, g: 0, b: 0, a: 1}
-    yellow: {r: 0.99034953, g: 1, b: 0, a: 1}
-    blue: {r: 0, g: 0.35274744, b: 1, a: 1}
-    customColors: []
-    OnLetterAppearAnimationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    OnLetterAppearOpacity:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    effects: []
+  alternativeTheme: {fileID: 0}
   graph: {fileID: 11400000, guid: 433020d8fe1d8dc44965943f8e5cd014, type: 2}
   UiHandler: {fileID: 1442492118}
   testCube: {fileID: 1282338450}

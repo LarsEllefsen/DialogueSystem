@@ -5,19 +5,22 @@ using UnityEngine;
 
 namespace DialogueSystem
 {
+    [CreateAssetMenu(menuName = "Dialogue System/Theme")]
     [Serializable]
-    public class DialogueTheme
+    public class DialogueTheme : ScriptableObject
     {
         [Header("Colors")]
-        public Color red = new Color(.90f, .435f, .317f, 1);
-        public Color yellow = new Color(.913f, .768f, .415f, 1);
-        public Color blue = new Color(.149f, .274f, .325f, 1);
+        public Color32 red = new Color32(230, 57, 70, 255);
+        public Color32 yellow = new Color32(255,210,63, 255);
+        public Color32 blue = new Color32(132,230,248, 255);
+        public Color32 green = new Color32(119,173,120, 255);
+        public Color32 purple = new Color32(203,179,191, 255);
 
         [Serializable]
         public struct ColorDictionary
         {
             public string name;
-            public Color color;
+            public Color32 color;
         }
 
         public List<ColorDictionary> customColors = new List<ColorDictionary>();
@@ -29,13 +32,21 @@ namespace DialogueSystem
         //[Header("Custom text effects")]
         public List<TextEffect> effects;
 
+        /*Private members*/
+        private AnimationCurve _defaultXPos = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+        private AnimationCurve _defaultYPos = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+        private AnimationCurve _defaultScale = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
+        private AnimationCurve _defaultRotation = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+
         public DialogueTheme()
         {
             colors = new Dictionary<string, Color>()
         {
             {"red", red },
             {"yellow", yellow },
-            {"blue", blue }
+            {"blue", blue },
+            {"green", green},
+            {"purple", purple}
         };
 
             foreach (ColorDictionary color in customColors)
@@ -44,8 +55,27 @@ namespace DialogueSystem
             }
 
             effects = new List<TextEffect>() {
-            new TextEffect("Wave", new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0)), new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1), new Keyframe(1, -.5f)), true)
-        };
+                new TextEffect("Wave", 
+                    _defaultXPos,
+                    new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1),new Keyframe(1, -.5f)), //yPos
+                    _defaultScale,
+                    _defaultRotation,
+                    true),
+
+                new TextEffect("Shake",
+                    new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.05f, 0.25f), new Keyframe(0.155f, -0.25f), new Keyframe(0.2f, 0f)), //xPos
+                    _defaultYPos,
+                    _defaultScale,
+                    _defaultRotation,
+                    true),
+
+                new TextEffect("Bounce",
+                    _defaultXPos,
+                    new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1),new Keyframe(1, -.5f)), //yPos
+                    _defaultScale,
+                     new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 360)), //Rotation
+                    true)
+            };
 
         }
 

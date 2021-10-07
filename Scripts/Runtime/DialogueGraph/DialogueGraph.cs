@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace DialogueSystem
 {
-    [CreateAssetMenu]
+    [CreateAssetMenu(menuName = "Dialogue System/Dialogue Graph")]
     [Serializable]
     public class DialogueGraph : NodeGraph
     {

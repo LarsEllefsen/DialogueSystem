@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace DialogueSystem
 {
+    [CreateAssetMenu(menuName = "Dialogue System/Settings")]
     [Serializable]
-    public class DialogueSettings
+    public class DialogueSettings: ScriptableObject
     {
         [SerializeField]
         public MultipleValidBranchesSelectionMode multipleValidBranchesSelectionMode;
@@ -26,7 +27,7 @@ namespace DialogueSystem
         public TextEffects.TextDisplayMode textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
 
         [Header("Typewriter")]
-        public float typewriterSpeed = 10f;
+        public float typewriterSpeed = 15f;
         public float typewriterSpeedMultiplier = 2f;
     }
 }

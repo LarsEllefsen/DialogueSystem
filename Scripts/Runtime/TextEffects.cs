@@ -216,12 +216,28 @@ namespace DialogueSystem
                     if (indices.Contains(charIndex))
                     {
                         TextEffect fx = theme.effects.Find(x => x.name == effect);
+
+
                         for (int j = 0; j < 4; ++j)
                         {
                             Vector3 orig = verts[charInfo.vertexIndex + j];
-                            float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + orig.y * 0.01f) * 10f;
-                            float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + orig.x * 0.01f) * 10f;
+                            float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + (fx.OffsetLettersX ? orig.y : orig.z) * 0.01f) * 10f;
+                            float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + (fx.OffsetLettersY ? orig.x : orig.z) * 0.01f) * 10f;
                             verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
+
+                            // Scale
+                            Vector3[] vertices = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
+                            Vector3 centerPoint = DialogueUtilities.CalculateCenter(vertices);
+                            verts[charInfo.vertexIndex + j] = (verts[charInfo.vertexIndex + j] - centerPoint) * fx.scaleAnimationCurve.Evaluate(deltatime) + centerPoint;
+
+                        }
+
+                        // Rotation
+                        Vector3[] v = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
+                        DialogueUtilities.RotateVertices(fx.rotationAnimationCurve.Evaluate(deltatime), ref v);
+                        for (int i = 0; i < v.Length; i++)
+                        {
+                            verts[charInfo.vertexIndex + i] = v[i];
                         }
                     }
                 }
@@ -235,6 +251,12 @@ namespace DialogueSystem
                     vertexColors[charInfo.vertexIndex + j] = colorIndices[charIndex];
                 }
             }
+            //DebugExtension.DebugPoint(verts[charInfo.vertexIndex + j], Color.red);
+            Debug.DrawLine(verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], Color.red);
+            Debug.DrawLine(verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], Color.red);
+            Debug.DrawLine(verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3], Color.red);
+            Debug.DrawLine(verts[charInfo.vertexIndex + 3], verts[charInfo.vertexIndex], Color.red);
+
         }
 
         private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)
