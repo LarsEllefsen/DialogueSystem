@@ -269,7 +269,6 @@ namespace DialogueSystem
                 CharacterInfo characterInfo = new CharacterInfo(Mathf.Max(positionDuration, colorDuration));
                 characterMap.Add(charIndex, characterInfo);
                 char character = _textComponent.text[charIndex];
-                Debug.Log(character);
                 callbackActions.OnCharacterAppear?.Invoke(character);
             }
 

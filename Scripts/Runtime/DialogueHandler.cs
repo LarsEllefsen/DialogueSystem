@@ -630,19 +630,6 @@ namespace DialogueSystem
                     string substring = interpolatedText.Substring(i, cmdEndIndex - i + 1);
                     TextCommand cmd = JsonUtility.FromJson<TextCommand>(substring);
                     ui.RegisterTextEffectIndices(cmd, index, index + cmd.text.Length);
-                    switch (cmd.effect)
-                    {
-                        case "wave":
-
-                            ui.textEffects.SetIndices(index, index + cmd.text.Length, TextEffects.Effect.WAVE);
-                            break;
-                        default:
-                            break;
-                    }
-                    if (cmd.color != null)
-                    {
-                        ui.textEffects.SetColorIndices(index, index + cmd.text.Length, cmd.color);
-                    }
                     str.Append(cmd.text);
                     i = cmdEndIndex;
                     index += cmd.text.Length;

@@ -34,17 +34,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: -0.5
-      inSlope: 2
-      outSlope: 2
+      inSlope: 5
+      outSlope: 5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
+      time: 0.1
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 5
+      outSlope: 5
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -65,7 +65,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.25
+      time: 0.1
       value: 0
       inSlope: 0
       outSlope: 0
@@ -82,17 +82,17 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 4
-      outSlope: 4
+      inSlope: 10
+      outSlope: 10
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.25
+      time: 0.1
       value: 1
-      inSlope: 4
-      outSlope: 4
+      inSlope: 10
+      outSlope: 10
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -102,6 +102,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   effects:
   - name: Wave
+    Active: 1
     YPosAnimationCurve:
       serializedVersion: 2
       m_Curve:
@@ -210,6 +211,7 @@ MonoBehaviour:
     OffsetXPosition: 1
     OffsetYPosition: 1
   - name: Shake
+    Active: 1
     YPosAnimationCurve:
       serializedVersion: 2
       m_Curve:
@@ -327,6 +329,7 @@ MonoBehaviour:
     OffsetXPosition: 1
     OffsetYPosition: 1
   - name: Bounce
+    Active: 1
     YPosAnimationCurve:
       serializedVersion: 2
       m_Curve:

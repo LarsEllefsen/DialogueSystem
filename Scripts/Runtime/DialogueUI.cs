@@ -118,6 +118,12 @@ namespace DialogueSystem
                 {
                     textEffects.SetEffectIndices(fx.name, startIndex, endIndex);
                 }
+
+                if(command.color != null)
+                {
+                    textEffects.SetColorIndices(startIndex, endIndex , command.color);
+                }
+
             }
 
         }
