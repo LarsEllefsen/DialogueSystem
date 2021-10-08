@@ -216,19 +216,19 @@ namespace DialogueSystem
                     if (indices.Contains(charIndex))
                     {
                         TextEffect fx = theme.effects.Find(x => x.name == effect);
-
-
+                        if (!fx.Active) return;
+                        
                         for (int j = 0; j < 4; ++j)
                         {
                             Vector3 orig = verts[charInfo.vertexIndex + j];
-                            float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + (fx.OffsetLettersX ? orig.y : orig.z) * 0.01f) * 10f;
-                            float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + (fx.OffsetLettersY ? orig.x : orig.z) * 0.01f) * 10f;
+                            float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + (fx.OffsetXPosition ? orig.y : orig.z) * 0.01f) * 10f;
+                            float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + (fx.OffsetYPosition ? orig.x : orig.z) * 0.01f) * 10f;
                             verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
 
                             // Scale
                             Vector3[] vertices = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
-                            Vector3 centerPoint = DialogueUtilities.CalculateCenter(vertices);
-                            verts[charInfo.vertexIndex + j] = (verts[charInfo.vertexIndex + j] - centerPoint) * fx.scaleAnimationCurve.Evaluate(deltatime) + centerPoint;
+                            Vector3 preScaleCenterPoint = DialogueUtilities.CalculateCenter(vertices);
+                            verts[charInfo.vertexIndex + j] = (verts[charInfo.vertexIndex + j] - preScaleCenterPoint) * fx.scaleAnimationCurve.Evaluate(deltatime) + preScaleCenterPoint;
 
                         }
 
@@ -261,15 +261,16 @@ namespace DialogueSystem
 
         private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)
         {
-            int numKeys = theme.OnLetterAppearAnimationCurve.length;
-            float positionDuration = theme.OnLetterAppearAnimationCurve.keys[numKeys - 1].time;
+            int numKeys = theme.OnLetterAppearXPos.length;
+            float positionDuration = theme.OnLetterAppearXPos.keys[numKeys - 1].time;
             float colorDuration = theme.OnLetterAppearOpacity.keys[numKeys - 1].time;
-
             if (!characterMap.ContainsKey(charIndex))
             {
                 CharacterInfo characterInfo = new CharacterInfo(Mathf.Max(positionDuration, colorDuration));
                 characterMap.Add(charIndex, characterInfo);
-                callbackActions.OnCharacterAppear?.Invoke('c');
+                char character = _textComponent.text[charIndex];
+                Debug.Log(character);
+                callbackActions.OnCharacterAppear?.Invoke(character);
             }
 
             CharacterInfo currentCharacter;
@@ -284,8 +285,9 @@ namespace DialogueSystem
                     for (int j = 0; j < 4; ++j)
                     {
                         Vector3 orig = verts[charInfo.vertexIndex + j];
-                        float curveValue = theme.OnLetterAppearAnimationCurve.Evaluate(currentCharacter.elapsedTime);
-                        verts[charInfo.vertexIndex + j] = orig + new Vector3(0, curveValue * 10, 0);
+                        float yPos = theme.OnLetterAppearYPos.Evaluate(currentCharacter.elapsedTime);
+                        float xPos = theme.OnLetterAppearXPos.Evaluate(currentCharacter.elapsedTime);
+                        verts[charInfo.vertexIndex + j] = orig + new Vector3(xPos * 10, yPos * 10, 0);
 
                         Color32 charColor = vertexColors[charInfo.vertexIndex + j];
                         float opacity = DialogueUtilities.FloatToByte(theme.OnLetterAppearOpacity.Evaluate(currentCharacter.elapsedTime));

@@ -6,6 +6,7 @@ namespace DialogueSystem
     public class TextEffect
     {
         public string name;
+        public bool Active = true;
 
         public AnimationCurve YPosAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
         public AnimationCurve XPosAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
@@ -14,8 +15,8 @@ namespace DialogueSystem
 
         public AnimationCurve rotationAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
 
-        public bool OffsetLettersX = true;
-        public bool OffsetLettersY = true;
+        public bool OffsetXPosition = true;
+        public bool OffsetYPosition = true;
 
         public TextEffect(string name, AnimationCurve xPosCurve, AnimationCurve yPosCurve, AnimationCurve scaleCurve, AnimationCurve rotationCurve, bool loop = false)
         {

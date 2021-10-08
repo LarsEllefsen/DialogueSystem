@@ -27,7 +27,8 @@ namespace DialogueSystem
         public Dictionary<string, Color> colors;
 
         [Header("Effects")]
-        public AnimationCurve OnLetterAppearAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+        public AnimationCurve OnLetterAppearXPos = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
+        public AnimationCurve OnLetterAppearYPos = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
         public AnimationCurve OnLetterAppearOpacity = new AnimationCurve(new Keyframe(0, 1), new Keyframe(1, 1));
         //[Header("Custom text effects")]
         public List<TextEffect> effects;
@@ -55,25 +56,26 @@ namespace DialogueSystem
             }
 
             effects = new List<TextEffect>() {
-                new TextEffect("Wave", 
-                    _defaultXPos,
+                new TextEffect("Wave",
+                    new AnimationCurve(_defaultXPos.keys),
                     new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1),new Keyframe(1, -.5f)), //yPos
-                    _defaultScale,
-                    _defaultRotation,
+                    new AnimationCurve(_defaultScale.keys),
+                    new AnimationCurve(_defaultRotation.keys),
                     true),
 
                 new TextEffect("Shake",
                     new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.05f, 0.25f), new Keyframe(0.155f, -0.25f), new Keyframe(0.2f, 0f)), //xPos
-                    _defaultYPos,
-                    _defaultScale,
-                    _defaultRotation,
+                    new AnimationCurve(_defaultYPos.keys),
+                    new AnimationCurve(_defaultScale.keys),
+                    new AnimationCurve(_defaultRotation.keys),
+
                     true),
 
                 new TextEffect("Bounce",
-                    _defaultXPos,
+                    new AnimationCurve(_defaultXPos.keys),
                     new AnimationCurve(new Keyframe(0, -.5f), new Keyframe(.5f, 1),new Keyframe(1, -.5f)), //yPos
-                    _defaultScale,
-                     new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 360)), //Rotation
+                    new AnimationCurve(_defaultScale.keys),
+                    new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 360)), //Rotation
                     true)
             };
 
