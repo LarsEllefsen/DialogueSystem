@@ -648,7 +648,7 @@ namespace DialogueSystem
                 }
             }
 
-            SetWaitIndicesRecursive();
+            SetWaitIndicesRecursive(str);
 
             return str.ToString();
         }
@@ -681,25 +681,22 @@ namespace DialogueSystem
             return interpolatedString;
         }
 
-        void SetWaitIndicesRecursive()
+        void SetWaitIndicesRecursive(StringBuilder sb)
         {
             Regex waitRegex = new Regex(@"%.*?\/%");
-            Match match = waitRegex.Match(str.ToString());
+            Match match = waitRegex.Match(sb.ToString());
 
             if(match.Success)
             {
                 Group key = match.Groups[0];
 
-                Debug.Log(key.Value);
                 string waitString = key.Value.Substring(1, key.Value.Length - 3);
-                Debug.Log(waitString);
                 if (float.TryParse(waitString, out float waitTime))
                 {
-
-                    str.Replace(key.Value, "", match.Index, key.Value.Length);
-                    ui.RegisterWaitIndex(match.Index - 1, waitTime);
-
-                    SetWaitIndicesRecursive();
+                    
+                    sb.Replace(key.Value, "", match.Index, key.Value.Length);
+                    ui.RegisterWaitIndex(match.Index - 1, key.Value.Length, waitTime);
+                    SetWaitIndicesRecursive(sb);
                 }
                 else
                 {

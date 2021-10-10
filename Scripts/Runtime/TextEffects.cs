@@ -99,6 +99,34 @@ namespace DialogueSystem
             _waitIndices.Add(index, time);
         }
 
+        public void OffsetExistingIndices(int start, int offsetAmount)
+        {
+            foreach(TextEffectWrapper wrapper in _textEffects)
+            {
+                if(wrapper.indices[0] > start)
+                {
+                    for (int i = 0; i < wrapper.indices.Count; i++)
+                    {
+                        wrapper.indices[i] -= offsetAmount;
+                    }
+                }
+            }
+
+            Dictionary<int, Color> newDict = new Dictionary<int, Color>();
+            foreach(int index in colorIndices.Keys)
+            {
+                if(index > start)
+                {
+                    Debug.Log("COLOR: " + colorIndices[index].r + ". old value: " + index + ". New value: " + (index - offsetAmount));
+                    newDict.Add(index - offsetAmount, colorIndices[index]);
+                } else
+                {
+                    newDict.Add(index, colorIndices[index]);
+                }
+            }
+            colorIndices = newDict;
+        }
+
         public void ClearAllIndices()
         {
             colorIndices.Clear();
