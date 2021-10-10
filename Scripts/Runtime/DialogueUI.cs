@@ -125,7 +125,11 @@ namespace DialogueSystem
                 }
 
             }
+        }
 
+        public void RegisterWaitIndex(int index, float waitTime)
+        {
+            textEffects.SetWaitIndex(index, waitTime);
         }
 
         public void Pause(bool toggle)

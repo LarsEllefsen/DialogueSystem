@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Added Offset property for all animated properties.
 - Added Active toggle to text effect.
 - Added pause functionality.
+- Added Wait Command (%[time]/%).
 
 ### Changed
 - Changed DialogueTheme and DialogueSettings to ScriptableObjects.

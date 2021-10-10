@@ -42,6 +42,7 @@ namespace DialogueSystem
         private Dictionary<int, Color> colorIndices = new Dictionary<int, Color>();
         private Dictionary<int, CharacterInfo> characterMap = new Dictionary<int, CharacterInfo>();
         private List<TextEffectWrapper> _textEffects = new List<TextEffectWrapper>();
+        private Dictionary<int, float> _waitIndices = new Dictionary<int, float>();
 
         public enum TextDisplayMode
         {
@@ -93,11 +94,17 @@ namespace DialogueSystem
             _textEffects.Add(wrapper);
         }
 
+        public void SetWaitIndex(int index, float time)
+        {
+            _waitIndices.Add(index, time);
+        }
+
         public void ClearAllIndices()
         {
             colorIndices.Clear();
             characterMap.Clear();
             _textEffects.Clear();
+            _waitIndices.Clear();
         }
 
         public void Init(DialogueTheme theme, DialogueSettings settings, DialogueCallbackActions callbackActions = null)
@@ -145,12 +152,17 @@ namespace DialogueSystem
                 if (speedOverride != null)
                 {
                     typeWriterWaitTime = speedOverride.Value;
-
                 }
                 else
                 {
                     typeWriterWaitTime = speedUp ? DialogueUtilities.DecreasingFunction(settings.typewriterSpeed * settings.typewriterSpeedMultiplier) : DialogueUtilities.DecreasingFunction(settings.typewriterSpeed);
                 }
+
+                if (_waitIndices.TryGetValue(i, out float waitTime))
+                {
+                    typeWriterWaitTime = waitTime;
+                }
+
                 yield return new WaitForSeconds(typeWriterWaitTime);
             }
 

@@ -619,9 +619,12 @@ namespace DialogueSystem
             str.Clear();
             ui.Reset();
 
-            Regex reg = new Regex(@"<.*?/>");
-            MatchCollection regexMatches = reg.Matches(line);
-            string interpolatedText = ReplaceWords(regexMatches, line);
+            Regex dictionaryRegex = new Regex(@"<.*?\/>");
+            Regex waitRegex = new Regex(@"%.*?\/%");
+
+
+            MatchCollection dictionaryRegexMatches = dictionaryRegex.Matches(line);
+            string interpolatedText = ReplaceWords(dictionaryRegexMatches, line);
 
             List<int> CmdObjectIndex = interpolatedText.AllIndexesOf("{");
 
@@ -644,6 +647,8 @@ namespace DialogueSystem
                     index++;
                 }
             }
+
+            SetWaitIndicesRecursive();
 
             return str.ToString();
         }
@@ -674,6 +679,34 @@ namespace DialogueSystem
             }
 
             return interpolatedString;
+        }
+
+        void SetWaitIndicesRecursive()
+        {
+            Regex waitRegex = new Regex(@"%.*?\/%");
+            Match match = waitRegex.Match(str.ToString());
+
+            if(match.Success)
+            {
+                Group key = match.Groups[0];
+
+                Debug.Log(key.Value);
+                string waitString = key.Value.Substring(1, key.Value.Length - 3);
+                Debug.Log(waitString);
+                if (float.TryParse(waitString, out float waitTime))
+                {
+
+                    str.Replace(key.Value, "", match.Index, key.Value.Length);
+                    ui.RegisterWaitIndex(match.Index - 1, waitTime);
+
+                    SetWaitIndicesRecursive();
+                }
+                else
+                {
+                    Debug.LogError($"Invalid wait command found: {waitString}");
+                }
+            }
+            
         }
 
     }
