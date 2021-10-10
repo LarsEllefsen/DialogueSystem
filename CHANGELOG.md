@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 10.10.2021
+
+### Added
+- Fixed an issue where Wait command would offset color and text effects.
+
 ## [1.1.0] - 10.10.2021
 
 ### Added
