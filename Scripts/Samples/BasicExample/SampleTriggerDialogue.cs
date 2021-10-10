@@ -62,7 +62,7 @@ public class SampleTriggerDialogue : MonoBehaviour
                 }
                 else
                 {
-                    dialogueManager.AdvanceDialogue();
+                    if(dialogueManager.CurrentState != DialogueState.AwaitingEventResponse) dialogueManager.AdvanceDialogue();
                 }
 
             }
@@ -111,12 +111,12 @@ public class SampleTriggerDialogue : MonoBehaviour
 
     public void OnNodeLeave(BaseNode node)
     {
-        Debug.Log("left " + node.name);
+        //Debug.Log("left " + node.name);
     }
 
     public void OnNodeEnter(BaseNode node)
     {
-        Debug.Log("Entered " + node.name);
+        //Debug.Log("Entered " + node.name);
     }
 
     public void OnLineEndCallback(TextNode node)
@@ -139,6 +139,7 @@ public class SampleTriggerDialogue : MonoBehaviour
     {
         if (myEvent != null)
         {
+            Debug.Log(myEvent.eventName);
             if (myEvent.eventName == "rotateCube")
             {
                 dialogueManager.Ui.ShowDialoguePane(false);
@@ -164,6 +165,7 @@ public class SampleTriggerDialogue : MonoBehaviour
             testCube.eulerAngles = new Vector3(testCube.eulerAngles.x, yRotation, testCube.eulerAngles.z);
             yield return null;
         }
+        Debug.Log("Event done!");
         dialogueManager.AdvanceDialogue();
     }
 

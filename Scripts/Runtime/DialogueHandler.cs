@@ -276,12 +276,14 @@ namespace DialogueSystem
 
         public void HandleEventNode(EventNode node)
         {
-            if (CurrentState == DialogueState.Paused)
+            if (CurrentState == DialogueState.AwaitingEventResponse)
             {
                 BaseNode nextNode = GetNextNode(node);
                 if (nextNode != null)
                 {
+
                     CurrentNode = nextNode;
+                    CurrentState = DialogueState.Running;
                     InvokeCallbacks(DialogueEventType.OnEventNodeLeave);
                     TraverseGraph();
 
@@ -290,36 +292,37 @@ namespace DialogueSystem
                 {
                     EndDialogue();
                 }
-            }
-
-
-            if (!node.GoToNextNodeAutomatically)
+            } 
+            else
             {
-                CurrentState = DialogueState.AwaitingEventResponse;
-            }
-
-            if (callbackActions.EventHandler == null)
-            {
-                Debug.LogError("No dialogue event handler is registered.");
-            }
-
-            InvokeCallbacks(DialogueEventType.OnEventNodeEnter);
-            foreach (DialogueEvent dialogueEvent in node.events)
-            {
-                callbackActions.EventHandler?.Invoke(dialogueEvent);
-            }
-
-            if (node.GoToNextNodeAutomatically)
-            {
-                BaseNode nextNode = GetNextNode(node);
-                if (nextNode != null)
+                if (!node.GoToNextNodeAutomatically)
                 {
-                    CurrentNode = nextNode;
-                    TraverseGraph();
+                    CurrentState = DialogueState.AwaitingEventResponse;
                 }
-                else
+
+                if (callbackActions.EventHandler == null)
                 {
-                    EndDialogue();
+                    Debug.LogError("No dialogue event handler is registered.");
+                }
+
+                InvokeCallbacks(DialogueEventType.OnEventNodeEnter);
+                foreach (DialogueEvent dialogueEvent in node.events)
+                {
+                    callbackActions.EventHandler?.Invoke(dialogueEvent);
+                }
+
+                if (node.GoToNextNodeAutomatically)
+                {
+                    BaseNode nextNode = GetNextNode(node);
+                    if (nextNode != null)
+                    {
+                        CurrentNode = nextNode;
+                        TraverseGraph();
+                    }
+                    else
+                    {
+                        EndDialogue();
+                    }
                 }
             }
         }
