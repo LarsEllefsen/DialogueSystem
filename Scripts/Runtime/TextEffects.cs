@@ -117,7 +117,6 @@ namespace DialogueSystem
             {
                 if(index > start)
                 {
-                    Debug.Log("COLOR: " + colorIndices[index].r + ". old value: " + index + ". New value: " + (index - offsetAmount));
                     newDict.Add(index - offsetAmount, colorIndices[index]);
                 } else
                 {
