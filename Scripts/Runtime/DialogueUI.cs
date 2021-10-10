@@ -116,7 +116,7 @@ namespace DialogueSystem
                 TextEffect fx = theme.effects.Find(x => x.name.ToLower() == command.effect.ToLower());
                 if (fx != null)
                 {
-                    textEffects.SetEffectIndices(fx.name, startIndex, endIndex);
+                    textEffects.SetEffectIndices(fx, startIndex, endIndex);
                 }
 
                 if(command.color != null)

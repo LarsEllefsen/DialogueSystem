@@ -43,7 +43,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 93f134b3581deed4eaade0d52314c4b9
+  id: 77f746fb53f4d6d4b9d3559e47a29154
   nodeName: Text node
   processed: 0
   entered: 0
@@ -104,10 +104,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c0aba723c1fb87a4296d79bab20dce62
+  id: 85bc6f69d90797d498d78ba85da8b8c0
   nodeName: Text node
   processed: 0
-  entered: 0
+  entered: 1
   input: 0
   metaData:
   - key: Speaker
@@ -116,8 +116,9 @@ MonoBehaviour:
     value: 
   audioClip: {fileID: 0}
   syncTypewriter: 0
-  text: ' {"effect":"wave", "text":"this"} is a {"effect":"bounce", "text":" basic"}
-    example on how to use the dialogue system! Press Space to advance the dialogue.'
+  text: ' {"effect":"wave", "text":"this"}  {"effect":"wave", "text":"is a"} {"effect":"bounce",
+    "text":" basic"} example on how to use the dialogue system! Press Space to advance
+    the dialogue.'
   WaitForInput: 1
   output: 0
 --- !u!114 &-5703039246456782174
@@ -163,7 +164,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 6410961db2a45274c9722c01d6bcf609
+  id: 4d54df731b683ea429af8d4d4d6fd943
   nodeName: Text node
   processed: 0
   entered: 0
@@ -208,10 +209,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: eb7373492246e494981359370a8dcb3d
+  id: 3e49031d51ee08749b3afc5c405fbd17
   nodeName: Branch
-  processed: 0
-  entered: 0
+  processed: 1
+  entered: 1
   output: 0
   branchCondition: []
 --- !u!114 &11400000
@@ -295,7 +296,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: b2303cbfd74776245bf678c55283be50
+  id: d01d6c7e539440b46b8e883b9f76ca38
   nodeName: Text node
   processed: 0
   entered: 0
@@ -371,7 +372,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  id: 3d8e64368ad3ad7489f1b07e35cc2efc
+  id: 85bdec6578b42484785f8425f1d95ca5
   nodeName: Choice Node
   processed: 0
   entered: 0
@@ -427,7 +428,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 215a96e5e34880442a00c2457edcab69
+  id: ff57fa2f857336341a137de443b698d0
   nodeName: Text node
   processed: 0
   entered: 0
@@ -487,7 +488,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 9525582d768d912499e6efa92dcd2d01
+  id: bdf24f859c50bc54ebba08f6d1eb94ea
   nodeName: Text node
   processed: 0
   entered: 0
@@ -548,7 +549,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 800dc445d96edf549861b1e1ab542cd0
+  id: 381eea5dd10e2d54c86d3c02b03e7d6d
   nodeName: Text node
   processed: 0
   entered: 0
@@ -619,7 +620,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: e1a2b63fef5e4354b89449ebba4c535d
+  id: e61ca236557de7d4a92add6388652da7
   nodeName: Condition
   processed: 0
   entered: 0
@@ -679,7 +680,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 1498475a8f080224bbb22ed1e1780640
+  id: b2e3cceb7bef2584fbd4ec093a77bb89
   nodeName: Event node
   processed: 0
   entered: 0

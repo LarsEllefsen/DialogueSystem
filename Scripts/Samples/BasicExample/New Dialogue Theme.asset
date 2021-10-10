@@ -208,8 +208,8 @@ MonoBehaviour:
       m_PreInfinity: 1
       m_PostInfinity: 1
       m_RotationOrder: 4
-    OffsetXPosition: 1
-    OffsetYPosition: 1
+    XPositionOffset: 0.1
+    YPositionOffset: 0.1
   - name: Shake
     Active: 1
     YPosAnimationCurve:
@@ -326,8 +326,8 @@ MonoBehaviour:
       m_PreInfinity: 1
       m_PostInfinity: 1
       m_RotationOrder: 4
-    OffsetXPosition: 1
-    OffsetYPosition: 1
+    XPositionOffset: 0.1
+    YPositionOffset: 0.1
   - name: Bounce
     Active: 1
     YPosAnimationCurve:
@@ -360,8 +360,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0
-      m_PreInfinity: 1
-      m_PostInfinity: 1
+      m_PreInfinity: 2
+      m_PostInfinity: 2
       m_RotationOrder: 4
     XPosAnimationCurve:
       serializedVersion: 2
@@ -432,8 +432,8 @@ MonoBehaviour:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0
-      m_PreInfinity: 1
-      m_PostInfinity: 1
+      m_PreInfinity: 2
+      m_PostInfinity: 2
       m_RotationOrder: 4
-    OffsetXPosition: 1
-    OffsetYPosition: 1
+    XPositionOffset: 0.1
+    YPositionOffset: 0.1

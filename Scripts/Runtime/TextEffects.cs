@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using static DialogueSystem.DialogueHandler;
+using System.Linq;
 
 namespace DialogueSystem
 {
@@ -38,11 +39,9 @@ namespace DialogueSystem
         /* Private member variables */
         private TMP_Text _textComponent;
         private TMP_TextInfo _textInfo;
-        private float deltatime = 0f;
         private Dictionary<int, Color> colorIndices = new Dictionary<int, Color>();
-        private List<int> waveIndices = new List<int>();
         private Dictionary<int, CharacterInfo> characterMap = new Dictionary<int, CharacterInfo>();
-        private Dictionary<string, List<int>> effectIndices = new Dictionary<string, List<int>>();
+        private List<TextEffectWrapper> _textEffects = new List<TextEffectWrapper>();
 
         public enum TextDisplayMode
         {
@@ -70,26 +69,6 @@ namespace DialogueSystem
             Paused = toggle;
         }
 
-        public void SetIndices(int start, int end, Effect effect)
-        {
-            switch (effect)
-            {
-                case Effect.WAVE:
-                    for (int i = start; i < end; ++i)
-                    {
-                        waveIndices.Add(i);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        public void SetIndex(int i)
-        {
-            waveIndices.Add(i);
-        }
-
         public void SetColorIndices(int start, int end, string color)
         {
 
@@ -102,37 +81,23 @@ namespace DialogueSystem
             }
         }
 
-        public void SetEffectIndices(string effectName, int start, int end)
+        public void SetEffectIndices(TextEffect fx, int start, int end)
         {
-            if (!effectIndices.ContainsKey(effectName))
+            List<int> indices = new List<int>();
+            for (int i = start; i < end; ++i)
             {
-                List<int> indices = new List<int>();
-                for (int i = start; i < end; ++i)
-                {
-                    indices.Add(i);
-                }
-                effectIndices.Add(effectName, indices);
+                indices.Add(i);
             }
-            else
-            {
-                List<int> indices;
-                if (effectIndices.TryGetValue(effectName, out indices))
-                {
-                    for (int i = start; i < end; ++i)
-                    {
-                        indices.Add(i);
-                    }
-                    effectIndices[effectName] = indices;
-                }
-            }
+            int id = _textEffects.Count();
+            TextEffectWrapper wrapper = new TextEffectWrapper(id, fx, indices);
+            _textEffects.Add(wrapper);
         }
 
         public void ClearAllIndices()
         {
             colorIndices.Clear();
-            waveIndices.Clear();
             characterMap.Clear();
-            effectIndices.Clear();
+            _textEffects.Clear();
         }
 
         public void Init(DialogueTheme theme, DialogueSettings settings, DialogueCallbackActions callbackActions = null)
@@ -194,6 +159,15 @@ namespace DialogueSystem
             yield return null;
         }
 
+        private float GetOffset(int currentIndex, List<int> indices, float offsetAmount)
+        {
+            if(offsetAmount > 0)
+            {
+                return indices.IndexOf(currentIndex) * offsetAmount;
+            }
+            return 0;
+        }
+
 
         private void ForEachCharacter(int charIndex, TMP_TextInfo textInfo)
         {
@@ -208,38 +182,34 @@ namespace DialogueSystem
 
             OnCharacterAppear(charIndex, charInfo, verts, vertexColors);
 
-            foreach (string effect in effectIndices.Keys)
+            TextEffectWrapper wrapper = _textEffects.Find(x => x.indices.Contains(charIndex));
+            if(wrapper != null)
             {
-                List<int> indices;
-                if (effectIndices.TryGetValue(effect, out indices))
+                TextEffect fx = wrapper.fx;
+                if (!fx.Active) return;
+                for (int j = 0; j < 4; ++j)
                 {
-                    if (indices.Contains(charIndex))
-                    {
-                        TextEffect fx = theme.effects.Find(x => x.name == effect);
-                        if (!fx.Active) return;
-                        
-                        for (int j = 0; j < 4; ++j)
-                        {
-                            Vector3 orig = verts[charInfo.vertexIndex + j];
-                            float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(deltatime + (fx.OffsetXPosition ? orig.y : orig.z) * 0.01f) * 10f;
-                            float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(deltatime + (fx.OffsetYPosition ? orig.x : orig.z) * 0.01f) * 10f;
-                            verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
+                    Vector3 orig = verts[charInfo.vertexIndex + j];
+                    //float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(wrapper.deltaTime + (fx.OffsetXPosition ? orig.y : orig.z) * 0.01f) * 10f;
+                    //float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(wrapper.deltaTime + (fx.OffsetYPosition ? orig.x : orig.z) * 0.01f) * 10f;
+                    float evaluatedXPosition = fx.XPosAnimationCurve.Evaluate(wrapper.deltaTime - GetOffset(charIndex, wrapper.indices, fx.XPositionOffset)) * 10f;
+                    float evaluatedYPosition = fx.YPosAnimationCurve.Evaluate(wrapper.deltaTime - GetOffset(charIndex, wrapper.indices, fx.YPositionOffset)) * 10f;
+                    verts[charInfo.vertexIndex + j] = orig + new Vector3(evaluatedXPosition, evaluatedYPosition, 0);
 
-                            // Scale
-                            Vector3[] vertices = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
-                            Vector3 preScaleCenterPoint = DialogueUtilities.CalculateCenter(vertices);
-                            verts[charInfo.vertexIndex + j] = (verts[charInfo.vertexIndex + j] - preScaleCenterPoint) * fx.scaleAnimationCurve.Evaluate(deltatime) + preScaleCenterPoint;
+                    //// Scale
+                    Vector3[] vertices = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
+                    Vector3 preScaleCenterPoint = DialogueUtilities.CalculateCenter(vertices);
+                    float evaluatedScale = fx.scaleAnimationCurve.Evaluate(wrapper.deltaTime - GetOffset(charIndex, wrapper.indices, fx.ScaleOffset));
+                    verts[charInfo.vertexIndex + j] = (verts[charInfo.vertexIndex + j] - preScaleCenterPoint) * evaluatedScale + preScaleCenterPoint;
 
-                        }
+                }
 
-                        // Rotation
-                        Vector3[] v = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
-                        DialogueUtilities.RotateVertices(fx.rotationAnimationCurve.Evaluate(deltatime), ref v);
-                        for (int i = 0; i < v.Length; i++)
-                        {
-                            verts[charInfo.vertexIndex + i] = v[i];
-                        }
-                    }
+                // Rotation
+                Vector3[] v = new Vector3[] { verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3] };
+                DialogueUtilities.RotateVertices(fx.rotationAnimationCurve.Evaluate(wrapper.deltaTime - GetOffset(charIndex, wrapper.indices, fx.RotationOffset)), ref v);
+                for (int i = 0; i < v.Length; i++)
+                {
+                    verts[charInfo.vertexIndex + i] = v[i];
                 }
             }
 
@@ -251,12 +221,6 @@ namespace DialogueSystem
                     vertexColors[charInfo.vertexIndex + j] = colorIndices[charIndex];
                 }
             }
-            //DebugExtension.DebugPoint(verts[charInfo.vertexIndex + j], Color.red);
-            Debug.DrawLine(verts[charInfo.vertexIndex], verts[charInfo.vertexIndex + 1], Color.red);
-            Debug.DrawLine(verts[charInfo.vertexIndex + 1], verts[charInfo.vertexIndex + 2], Color.red);
-            Debug.DrawLine(verts[charInfo.vertexIndex + 2], verts[charInfo.vertexIndex + 3], Color.red);
-            Debug.DrawLine(verts[charInfo.vertexIndex + 3], verts[charInfo.vertexIndex], Color.red);
-
         }
 
         private void OnCharacterAppear(int charIndex, TMP_CharacterInfo charInfo, Vector3[] verts, Color32[] vertexColors)
@@ -270,7 +234,14 @@ namespace DialogueSystem
                 characterMap.Add(charIndex, characterInfo);
                 char character = _textComponent.text[charIndex];
                 callbackActions.OnCharacterAppear?.Invoke(character);
+
+                TextEffectWrapper wrapper = _textEffects.Find(x => x.indices.Contains(charIndex));
+                if(wrapper != null)
+                {
+                    wrapper.animating = true;
+                }
             }
+
 
             CharacterInfo currentCharacter;
             if (characterMap.TryGetValue(charIndex, out currentCharacter))
@@ -303,8 +274,19 @@ namespace DialogueSystem
             {
                 Debug.LogWarning("No character found in char map");
             }
+        }
 
 
+        private void UpdateDeltaTime()
+        {
+
+            foreach(TextEffectWrapper fx in _textEffects)
+            {
+                if(fx.animating)
+                {
+                    fx.deltaTime += Time.deltaTime;
+                }
+            }
         }
 
         void LateUpdate()
@@ -316,8 +298,7 @@ namespace DialogueSystem
                 if (_textInfo.characterCount > 0)
                 {
                     _textComponent.ForceMeshUpdate();
-
-                    deltatime += Time.deltaTime;
+                    UpdateDeltaTime();
 
                     for (int i = 0; i < _textInfo.characterCount; ++i)
                     {

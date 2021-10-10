@@ -15,8 +15,14 @@ namespace DialogueSystem
 
         public AnimationCurve rotationAnimationCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 0));
 
-        public bool OffsetXPosition = true;
-        public bool OffsetYPosition = true;
+        [Min(0f)]
+        public float XPositionOffset = 0.1f;
+        [Min(0f)]
+        public float YPositionOffset = 0.1f;
+        [Min(0f)]
+        public float ScaleOffset = 0f;
+        public float RotationOffset = 0f;
+
 
         public TextEffect(string name, AnimationCurve xPosCurve, AnimationCurve yPosCurve, AnimationCurve scaleCurve, AnimationCurve rotationCurve, bool loop = false)
         {
