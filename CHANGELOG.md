@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Added animated properties for scale and rotation to TextEffect.
 - Added Offset property for all animated properties.
 - Added Active toggle to text effect.
+- Added pause functionality.
 
 ### Changed
 - Changed DialogueTheme and DialogueSettings to ScriptableObjects.

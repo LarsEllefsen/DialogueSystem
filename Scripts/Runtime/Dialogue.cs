@@ -202,17 +202,36 @@ namespace DialogueSystem
         #region Typewriter Interactions
         public void ToggleSpeedUp(bool toggle)
         {
+            if (CurrentState == DialogueState.Paused)
+            {
+                Debug.LogWarning("The dialogue system is currently paused.");
+                return;
+            }
             Ui.textEffects.SpeedUp(toggle);
         }
 
         public void EndLine()
         {
-            Ui.textEffects.DisplayWholeText();
+            if(CurrentState == DialogueState.Paused)
+            {
+                Debug.LogWarning("The dialogue system is currently paused.");
+                return;
+            }
+            if(CurrentState == DialogueState.Animating)
+            {
+                Ui.textEffects.DisplayWholeText();
+            }
+
         }
         #endregion
 
         public void AdvanceDialogue()
         {
+            if(CurrentState == DialogueState.Paused)
+            {
+                Debug.LogWarning("The dialogue system is currently paused.");
+                return;
+            }
 
             if (CurrentState == DialogueState.AwaitingChoice)
             {
@@ -226,12 +245,10 @@ namespace DialogueSystem
                 return;
             }
 
-            if (CurrentState != DialogueState.Running && CurrentState != DialogueState.Idle && CurrentState != DialogueState.Paused)
+            if(CurrentState == DialogueState.NotRunning)
             {
-                Debug.LogWarning("Dialogue system is currenly not running.");
-                return;
+                Debug.LogWarning("The dialogue system is not running. Use StartDialogue() to start.");
             }
-
 
             _handler.TraverseGraph();
 
@@ -270,6 +287,11 @@ namespace DialogueSystem
         public void Pause(bool toggle)
         {
             _handler.Pause(toggle);
+        }
+
+        public void OnApplicationPause(bool pause)
+        {
+            Pause(pause);   
         }
 
         #region

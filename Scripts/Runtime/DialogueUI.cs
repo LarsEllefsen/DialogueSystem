@@ -127,5 +127,10 @@ namespace DialogueSystem
             }
 
         }
+
+        public void Pause(bool toggle)
+        {
+            textEffects.Pause(toggle);
+        }
     }
 }

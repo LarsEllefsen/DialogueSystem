@@ -273,6 +273,7 @@ namespace DialogueSystem
                 throw new ArgumentOutOfRangeException($"choice numer {choiceNum} is not out of range. Found {node.choices.Count} available choices.");
             }
         }
+
         public void HandleEventNode(EventNode node)
         {
             if (CurrentState == DialogueState.Paused)
@@ -294,7 +295,7 @@ namespace DialogueSystem
 
             if (!node.GoToNextNodeAutomatically)
             {
-                CurrentState = DialogueState.Paused;
+                CurrentState = DialogueState.AwaitingEventResponse;
             }
 
             if (callbackActions.EventHandler == null)
@@ -360,6 +361,7 @@ namespace DialogueSystem
         public void EndDialogue()
         {
             IsRunning = false;
+            CurrentState = DialogueState.NotRunning;
             InvokeCallbacks(DialogueEventType.OnBranchLeave);
             InvokeCallbacks(DialogueEventType.OnDialogueLeave);
             ui.ShowDialoguePane(false);
@@ -600,12 +602,12 @@ namespace DialogueSystem
 
         public void Pause(bool toggle)
         {
-            //if(CurrentState != DialogueSystem.State.Paused && toggle == true)
-            //{
-            //    PreviousState = CurrentState;
-            //}
-            //CurrentState = toggle? DialogueSystem.State.Paused : PreviousState;
-            //ui.textEffects.Pause(toggle);
+            if (CurrentState != DialogueState.Paused && toggle == true)
+            {
+                PreviousState = CurrentState;
+            }
+            CurrentState = toggle ? DialogueState.Paused : PreviousState;
+            ui.Pause(toggle);
         }
 
         string ProcessText(string line)
@@ -618,7 +620,6 @@ namespace DialogueSystem
             MatchCollection regexMatches = reg.Matches(line);
             string interpolatedText = ReplaceWords(regexMatches, line);
 
-            List<TextCommand> AllCmdObjects = new List<TextCommand>();
             List<int> CmdObjectIndex = interpolatedText.AllIndexesOf("{");
 
             int index = 0;
