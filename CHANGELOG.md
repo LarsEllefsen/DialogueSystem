@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased] - 05.12.2021
+## [1.2] - 05.12.2021
 
 ### Added
 - Added timeline integration.
