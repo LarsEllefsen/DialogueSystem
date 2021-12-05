@@ -26,8 +26,14 @@ namespace DialogueSystem
 
         public TextEffects.TextDisplayMode textDisplayMode = TextEffects.TextDisplayMode.TYPEWRITER;
 
+        public bool showWarnings = true;
+
         [Header("Typewriter")]
         public float typewriterSpeed = 15f;
         public float typewriterSpeedMultiplier = 2f;
+
+        [Header("Timeline")]
+        public bool autoResumeTimelineOnDialogueEnd = true;
+
     }
 }
