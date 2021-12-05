@@ -15,5 +15,6 @@ namespace DialogueSystem
         Waiting,
         Paused,
         AwaitingEventResponse,
+        PausedByTimeline,
     }
 }

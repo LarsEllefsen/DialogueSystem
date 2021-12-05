@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 using XNode;
 
 namespace DialogueSystem
 {
-    public class Dialogue : MonoBehaviour
+    public class Dialogue : MonoBehaviour, INotificationReceiver
     {
         public static Dialogue instance { get; private set; }
 
@@ -15,10 +17,6 @@ namespace DialogueSystem
 
         /* Public members */
         #region Public members
-        [Header("File path")]
-        public string resourceFolderName = "DialogueAssets";
-        public string path = "";
-        public string dialogueFileName;
 
         [Header("Graph")]
         public DialogueGraph dialogueGraph;
@@ -48,6 +46,8 @@ namespace DialogueSystem
         }
 
         public Func<DialogueChoices, bool> OnChoiceDraw { get { return _handler.OnChoiceDraw; } set { _handler.OnChoiceDraw += value; } }
+
+        public Func<DialogueSignalEmitter, bool> StartDialogueFromSignal = null;
         #endregion
 
         #region Callback functions
@@ -84,6 +84,7 @@ namespace DialogueSystem
         public bool IsRunning { get { return _handler.IsRunning; } }
         public bool isAnimating { get { return Ui.isAnimating; } }
         public bool speedUp { get { return Ui.textEffects.speedUp; } }
+        public Playable currentPlayable { get; private set; }
         public BaseNode CurrentNode
         {
             get
@@ -112,7 +113,7 @@ namespace DialogueSystem
         public DialogueState CurrentState { get { return _handler.CurrentState; } }
         #endregion
 
-        private void Awake()
+        private void Start()
         {
             if (instance != null && instance != this)
             {
@@ -123,12 +124,12 @@ namespace DialogueSystem
                 instance = this;
             }
 
-            if(theme == null)
+            if (theme == null)
             {
                 theme = ScriptableObject.CreateInstance<DialogueTheme>();
             }
 
-            if(settings == null)
+            if (settings == null)
             {
                 settings = ScriptableObject.CreateInstance<DialogueSettings>();
             }
@@ -178,16 +179,11 @@ namespace DialogueSystem
             this.gameStateVariables = gameState;
         }
 
-        public void SetDialogueFileName(string dialogueFileName)
-        {
-            this.dialogueFileName = dialogueFileName;
-        }
-
         public void StartDialogue()
         {
             if (IsRunning)
             {
-                Debug.LogWarning("The dialogue system is already running.");
+                if (settings.showWarnings) Debug.LogWarning("The dialogue system is already running.");
                 return;
             }
 
@@ -195,6 +191,19 @@ namespace DialogueSystem
             {
                 Debug.LogError("No dialogue graph is set.");
             }
+            _handler.ExecuteGraph(dialogueGraph);
+
+        }
+
+        public void StartDialogue(DialogueGraph graph)
+        {
+            if (IsRunning)
+            {
+                if (settings.showWarnings) Debug.LogWarning("The dialogue system is already running.");
+                return;
+            }
+
+            this.dialogueGraph = graph;
             _handler.ExecuteGraph(dialogueGraph);
 
         }
@@ -212,12 +221,12 @@ namespace DialogueSystem
 
         public void EndLine()
         {
-            if(CurrentState == DialogueState.Paused)
+            if (CurrentState == DialogueState.Paused)
             {
                 Debug.LogWarning("The dialogue system is currently paused.");
                 return;
             }
-            if(CurrentState == DialogueState.Animating)
+            if (CurrentState == DialogueState.Animating)
             {
                 Ui.textEffects.DisplayWholeText();
             }
@@ -227,27 +236,34 @@ namespace DialogueSystem
 
         public void AdvanceDialogue()
         {
-            if(CurrentState == DialogueState.Paused)
+            if (CurrentState == DialogueState.Paused)
             {
-                Debug.LogWarning("The dialogue system is currently paused.");
+                if (settings.showWarnings) Debug.LogWarning("The dialogue system is currently paused.");
                 return;
             }
 
             if (CurrentState == DialogueState.AwaitingChoice)
             {
-                Debug.LogWarning("Dialogue is currently awaiting a dialogue choice. Use SelectDialogueChoice to advance the dialogue.");
+                if (settings.showWarnings) Debug.LogWarning("Dialogue is currently awaiting a dialogue choice. Use SelectDialogueChoice to advance the dialogue.");
                 return;
             }
 
             if (CurrentState == DialogueState.Waiting)
             {
-                Debug.LogWarning("Dialogue system is currently waiting.");
+                if (settings.showWarnings) Debug.LogWarning("Dialogue system is currently waiting.");
                 return;
             }
 
-            if(CurrentState == DialogueState.NotRunning)
+            if (CurrentState == DialogueState.NotRunning)
             {
-                Debug.LogWarning("The dialogue system is not running. Use StartDialogue() to start.");
+                if (settings.showWarnings) Debug.LogWarning("The dialogue system is not running. Use StartDialogue() to start.");
+                return;
+            }
+
+            if(CurrentState == DialogueState.PausedByTimeline)
+            {
+                if(settings.showWarnings) Debug.LogWarning("The dialogue system is paused by the playing timeline.");
+                return;
             }
 
             _handler.TraverseGraph();
@@ -269,7 +285,7 @@ namespace DialogueSystem
         {
             if (CurrentState != DialogueState.AwaitingChoice)
             {
-                Debug.LogWarning("The dialogue system is not awaiting a player choice. Current node is " + _handler.CurrentNode.NodeType);
+                if (settings.showWarnings) Debug.LogWarning("The dialogue system is not awaiting a player choice. Current node is " + _handler.CurrentNode.NodeType);
                 return;
             }
 
@@ -291,7 +307,8 @@ namespace DialogueSystem
 
         public void OnApplicationPause(bool pause)
         {
-            Pause(pause);   
+            //Debug.Log("Pause");
+            //Pause(pause);   
         }
 
         #region
@@ -304,5 +321,41 @@ namespace DialogueSystem
         }
         #endregion
 
+        public void OnNotify(Playable origin, INotification notification, object context)
+        {
+            if (notification is DialogueSignalEmitter signal)
+            {
+                _handler.SetCurrentPlayable(origin);
+                if(signal.asset.name.ToLower() == "triggerdialoguesignal")
+                {
+                    if (StartDialogueFromSignal != null)
+                    {
+                        StartDialogueFromSignal(signal);
+                    }
+                    else
+                    {
+                        if (signal.PauseTimeline) _handler.PauseCurrentPlayable(true);
+                        dialogueGraph = signal.Graph;
+                        StartDialogue();
+                    }
+                }
+
+                if (signal.asset.name.ToLower() == "resumedialoguesignal")
+                {
+                    if (signal.PauseTimeline) _handler.PauseCurrentPlayable(true);
+                    Ui.ShowDialoguePane(true);
+                    _handler.ResumeDialoguePausedByTimeline();
+                    AdvanceDialogue();
+                }
+
+                if (signal.asset.name.ToLower() == "advancedialoguesignal")
+                {
+                    if (signal.PauseTimeline) _handler.PauseCurrentPlayable(true);
+                    Ui.ShowDialoguePane(true);
+                    _handler.ResumeDialoguePausedByTimeline();
+                    AdvanceDialogue();
+                }
+            }
+        }
     }
 }

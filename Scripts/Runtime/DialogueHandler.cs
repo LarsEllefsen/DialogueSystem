@@ -6,6 +6,7 @@ using XNode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using System.Text.RegularExpressions;
+using UnityEngine.Playables;
 
 namespace DialogueSystem
 {
@@ -17,9 +18,11 @@ namespace DialogueSystem
         public bool IsRunning { get; private set; }
         public MonoBehaviour AttachedMonoBehaviour { get; private set; }
         public DialogueState CurrentState { get; private set; }
+        public Playable CurrentPlayable { get; private set; }
 
         /*Private */
         private DialogueState PreviousState;
+        private double _cachedPlayableSpeed = 1f;
 
         /*
          * Public  
@@ -35,6 +38,7 @@ namespace DialogueSystem
         public BaseNode PreviousNode { get; private set; }
         public List<BranchNode> CurrentValidBranches { get; private set; }
         private BaseNode currentTextNode;
+        private BaseNode currentTimelineEventNode;
 
         /*
          * Settings
@@ -192,6 +196,37 @@ namespace DialogueSystem
                     OnWaitNodeEndCallback();
                 }
             }
+
+            if(nodeType == "TimelineEventNode")
+            {
+                if(currentTimelineEventNode == null)
+                {
+                    currentTimelineEventNode = CurrentNode;
+                    TimelineEventNode node = CurrentNode as TimelineEventNode;
+                    if (node.timelineEvent == TimelineEventNode.TimelineEvent.Resume)
+                    {
+                        if (node.HideDialoguePanelOnResume) ui.ShowDialoguePane(false);
+                        if (node.PauseDialogueOnResume) CurrentState = DialogueState.PausedByTimeline;
+                        PauseCurrentPlayable(false);
+                    }
+
+                } 
+                else
+                {
+                    BaseNode nextNode = GetNextNode(currentTimelineEventNode);
+                    currentTimelineEventNode = null;
+                    if(nextNode != null)
+                    {
+                        CurrentNode = nextNode;
+                        //INVOKE
+                        TraverseGraph();
+                    } else
+                    {
+                        EndDialogue();
+                    }
+                }
+
+            }
         }
 
         public void HandleTextNode()
@@ -229,6 +264,7 @@ namespace DialogueSystem
                 
             }
         }
+
         public void HandleChoiceNode(ChoiceNode node, int choiceNum = -1)
         {
             if (node == null)
@@ -365,6 +401,7 @@ namespace DialogueSystem
         {
             IsRunning = false;
             CurrentState = DialogueState.NotRunning;
+            if (settings.autoResumeTimelineOnDialogueEnd) PauseCurrentPlayable(false);
             InvokeCallbacks(DialogueEventType.OnBranchLeave);
             InvokeCallbacks(DialogueEventType.OnDialogueLeave);
             ui.ShowDialoguePane(false);
@@ -399,6 +436,31 @@ namespace DialogueSystem
         public void SetCallbackActions(DialogueCallbackActions callbackActions)
         {
             this.callbackActions = callbackActions;
+        }
+
+        public void SetCurrentPlayable(Playable playable)
+        {
+            CurrentPlayable = playable;
+        }
+
+        public void PauseCurrentPlayable(bool pause)
+        {
+            if (pause)
+            {
+                _cachedPlayableSpeed = CurrentPlayable.GetGraph().GetRootPlayable(0).GetSpeed();
+                CurrentPlayable.GetGraph().GetRootPlayable(0).SetSpeed(0);
+            }
+            else {
+                CurrentPlayable.GetGraph().GetRootPlayable(0).SetSpeed(_cachedPlayableSpeed);
+            }
+        }
+
+        public void ResumeDialoguePausedByTimeline()
+        {
+            if(CurrentState == DialogueState.PausedByTimeline)
+            {
+                CurrentState = DialogueState.Running;
+            }
         }
 
         private void GetPossibleBranches()

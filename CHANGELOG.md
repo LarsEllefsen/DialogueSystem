@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2] - 05.12.2021
+
+### Added
+- Added timeline integration.
+
+### Changed
+- Removed some unused properties and functions.
+
 ## [1.1.1] - 10.10.2021
 
 ### Added
