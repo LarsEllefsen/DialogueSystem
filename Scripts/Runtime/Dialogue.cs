@@ -113,7 +113,7 @@ namespace DialogueSystem
         public DialogueState CurrentState { get { return _handler.CurrentState; } }
         #endregion
 
-        private void Start()
+        private void Awake()
         {
             if (instance != null && instance != this)
             {

@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 05.12.2021
+
+### Changed
+- Changed initialization of the dialogue gameobject from Start to Awake.
+
 ## [1.2] - 05.12.2021
 
 ### Added
