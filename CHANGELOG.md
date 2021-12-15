@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [1.2.2] - 15.12.2021
+
+### Changed
+- Marked GameEventFlag as Serializeable.
+
 ## [1.2.1] - 05.12.2021
 
 ### Changed
