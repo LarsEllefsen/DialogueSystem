@@ -1,5 +1,6 @@
 ﻿namespace DialogueSystem
 {
+    [System.Serializable]
     public class GameEventFlag
     {
         public string name;
